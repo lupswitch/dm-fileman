@@ -1,5 +1,5 @@
 {
-    "name": "devmonk/dm-common",
+    "name": "devmonk/dm-fileman",
     "description": "File manager mainly for zf2-mailer / tinymce integration",
     "license": "BSD-3-Clause",
     "keywords": [
@@ -8,6 +8,8 @@
     "require": {
         "php": ">=5.4",
         "ext-mbstring": "*",
-        "zendframework/zendframework": "2.2.*"
+        "zendframework/zendframework": "2.2.*",
+        "imagine/imagine": "0.6.*@dev",
+        "devmonk/dm-common": "dev-master"
     }
 }
