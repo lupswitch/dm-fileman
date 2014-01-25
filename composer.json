@@ -8,8 +8,17 @@
     "require": {
         "php": ">=5.4",
         "ext-mbstring": "*",
-        "zendframework/zendframework": "2.2.*",
+        "zendframework/zend-mvc": "2.2.*",
+        "zendframework/zend-cache": "2.2.*",
         "imagine/imagine": "0.6.*@dev",
         "devmonk/dm-common": "dev-master"
+    },
+    "require-dev": {
+        "mikey179/vfsStream": "1.2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "DmFileman\\": "src/"
+        }
     }
 }
