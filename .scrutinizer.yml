@@ -8,7 +8,7 @@ tools:
         config:
             standard: PSR2
     php_code_coverage:
-        test_command: phpunit
+        test_command: phpunit -c travis.phpunit.xml
         config_path:  ~
         filter:
             paths: ["src"]

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit
+        backupGlobals="false"
+        backupStaticAttributes="false"
+        cacheTokens="false"
+        verbose="false"
+        colors="true"
+        bootstrap="./test/init.php">
+    <testsuites>
+        <testsuite name="DmFilemanTest">
+            <directory>./test/DmFilemanTest</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+            <exclude>
+                <file>./src/DmFileman/Module.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html" target="./report" charset="UTF-8"
+             highlight="false" lowUpperBound="35" highLowerBound="70"/>
+        <log type="coverage-clover" target="clover.xml"/>
+    </logging>
+</phpunit>
