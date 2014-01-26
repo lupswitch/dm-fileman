@@ -89,15 +89,15 @@ class Module
     {
         return array(
             'factories' => array(
-                'DmMailer\Controller\FileManagerController'  => function (ControllerManager $controllerManager) {
+                'DmFileman\Controller\FileManagerController'  => function (ControllerManager $controllerManager) {
                     /** @var ServiceManager $serviceManager */
                     $serviceManager = $controllerManager->getServiceLocator();
 
-                    $fileManager = $serviceManager->get('DmMailer\Service\FileManager');
+                    $fileManager = $serviceManager->get('DmFileman\Service\FileManager');
                     $createFileForm = new Form\CreateDirectoryForm();
                     $uploadFileForm = new Form\UploadFileForm();
                     $deleteFileForm = new Form\DeleteFileForm();
-                    $thumbsConfig = $serviceManager->get('DmMailer\Service\Thumbnailer');
+                    $thumbsConfig = $serviceManager->get('DmFileman\Service\Thumbnailer');
                     $userText = new View\Helper\UserText();
 
                     $createFileForm->setInputFilter(new InputFilter\CreateDirectory());
