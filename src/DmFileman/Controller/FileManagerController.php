@@ -113,7 +113,7 @@ class FileManagerController extends AbstractActionController
      */
     public function indexAction()
     {
-        return $this->redirect()->toRoute('filemanager/list', array('dir' => ''));
+        return $this->redirect()->toRoute('filemanager/list', array('dir' => '/'));
     }
 
     /**
