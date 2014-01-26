@@ -1,0 +1,41 @@
+<?php
+
+/** @var \DmFileman\Form\UploadFileForm $form */
+$form = $this->uploadForm;
+$form->prepare();
+
+$form->setAttribute('method', 'post');
+$form->setAttribute('class', 'form-inline');
+$form->setAttribute('enctype', 'multipart/form-data');
+$form->setAttribute('action', $this->url('filemanager/upload', array('dir' => $this->currentDir)));
+
+/** @var \Zend\Form\View\Helper\FormLabel $formLabel */
+$formLabel = $this->plugin('formLabel');
+
+echo $this->form()->openTag($form);
+
+/** @var \Zend\Form\Element $file directory name field */
+$file = $form->get('file');
+$file->setAttributes(array('class' => 'form-control', 'placeholder' => $file->getLabel()));
+$file->setOptions(array('label_attributes' => array('class' => 'sr-only col-xs-4')));
+echo $this->bootstrapForm()->inlineBlock(
+    $form->getValidationClass($file, 'form-group'),
+    $this->formLabel($file),
+    $this->formFile($file),
+    $this->formElementErrors($file)
+);
+
+// Security field
+$security = $form->get('security');
+echo $this->bootstrapForm()->basicHiddenBlock(
+    $form->getValidationClass($security, 'form-group'),
+    $this->formHidden($security),
+    $this->formElementErrors($security)
+);
+
+// Submit field
+$submit = $form->get('submit');
+$submit->setAttribute('class', 'btn btn-primary');
+echo $this->formElement($submit);
+
+echo $this->form()->closeTag();

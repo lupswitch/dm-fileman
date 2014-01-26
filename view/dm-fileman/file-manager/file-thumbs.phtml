@@ -1,0 +1,33 @@
+<?php
+
+/** @var $listItem \DmFileman\Service\FileManager\FileInfo */
+foreach ($this->list as $listItem):
+    if (!$listItem->isDir()) {
+        continue;
+    }
+    $relativePath = $this->url('filemanager/list', array('dir' => $listItem->getRelativePath(true)));
+    ?>
+    <div class="col-xs-4 col-md-2">
+        <a href="<?php echo $relativePath ?>" class="dir"
+           style='background-image: url("<?php echo $this->escapeCss($listItem->getThumbnailPath()); ?>");'>
+            <?php echo $listItem->getDisplayName() ?>
+        </a>
+    </div>
+    <?php
+endforeach;
+
+/** @var $listItem \DmFileman\Service\FileManager\FileInfo */
+foreach ($this->list as $listItem):
+    if (!$listItem->isFile()) {
+        continue;
+    }
+    $relativePath = $listItem->getOrigPath();
+    ?>
+    <div class="col-xs-4 col-md-2">
+        <a href="<?php echo $relativePath ?>" class="file"
+           style='background-image: url("<?php echo $this->escapeCss($listItem->getThumbnailPath()); ?>");'>
+            <?php echo $listItem->getDisplayName() ?>
+        </a>
+    </div>
+    <?php
+endforeach;

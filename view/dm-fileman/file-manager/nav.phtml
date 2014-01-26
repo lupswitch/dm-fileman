@@ -1,0 +1,34 @@
+<?php
+
+$homeLink    = $this->url('filemanager/list', array('dir' => urlencode('/')));
+$refreshLink = $this->url('filemanager/refresh', array('dir' => $this->currentDir));
+
+?>
+<div class="btn-group file-actions">
+    <div class="btn-group">
+        <a href="<?php echo $homeLink ?>" role="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-home"></span>
+            <?php echo $this->translate('Root') ?>
+        </a>
+        <a href="<?php echo $refreshLink ?>" role="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-refresh"></span>
+            <?php echo $this->translate('Refresh') ?>
+        </a>
+        <button type="button" class="btn btn-default" id="create-directory-btn">
+            <span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+            <?php echo $this->translate('New Directory') ?>
+        </button>
+        <button type="button" class="btn btn-default" id="upload-file-btn">
+            <span class="glyphicon glyphicon-upload"></span>
+            <?php echo $this->translate('Upload') ?>
+        </button>
+        <button type="button" class="btn btn-danger" id="delete-file-btn" disabled="disabled">
+            <span class="glyphicon glyphicon-remove"></span>
+            <?php echo $this->translate('Delete') ?>
+        </button>
+        <button type="button" class="btn btn-primary" id="select-file-btn" disabled="disabled">
+            <span class="glyphicon glyphicon-ok"></span>
+            <?php echo $this->translate('Select') ?>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="zf2-filemanager">
+    <?php echo $this->partial('/application/file-manager/nav.phtml') ?>
+
+    <div class="create-directory hidden" id="create-directory-form">
+        <?php echo $this->partial('/application/file-manager/create-dir.phtml'); ?>
+    </div>
+
+    <div class="delete-file hidden" id="delete-file-form">
+        <?php echo $this->partial('/application/file-manager/delete-file.phtml'); ?>
+    </div>
+
+    <div class="upload-file hidden" id="upload-file-form">
+        <?php echo $this->partial('/application/file-manager/upload-file.phtml'); ?>
+    </div>
+
+    <?php echo $this->partial('/partial/messages.phtml') ?>
+
+    <div class="row file-thumbs" id="file-thumbs">
+        <?php echo $this->partial('/application/file-manager/file-thumbs.phtml'); ?>
+    </div>
+
+</div>

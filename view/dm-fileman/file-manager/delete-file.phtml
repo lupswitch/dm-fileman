@@ -1,0 +1,40 @@
+<?php
+
+/** @var \DmFileman\Form\DeleteFileForm $form */
+$form = $this->deleteForm;
+$form->prepare();
+
+$form->setAttribute('method', 'post');
+$form->setAttribute('class', 'form-inline');
+$form->setAttribute('action', $this->url('filemanager/delete', array('dir' => $this->currentDir)));
+
+/** @var \Zend\Form\View\Helper\FormLabel $formLabel */
+$formLabel = $this->plugin('formLabel');
+
+echo $this->form()->openTag($form);
+
+/** @var \Zend\Form\Element $name directory name field */
+$name = $form->get('name');
+$name->setAttributes(array('class' => 'form-control', 'placeholder' => $name->getLabel()));
+$name->setOptions(array('label_attributes' => array('class' => 'sr-only col-xs-4')));
+echo $this->bootstrapForm()->inlineBlock(
+    $form->getValidationClass($name, 'form-group'),
+    $this->formLabel($name),
+    $this->formInput($name),
+    $this->formElementErrors($name)
+);
+
+// Security field
+$security = $form->get('security');
+echo $this->bootstrapForm()->basicHiddenBlock(
+    $form->getValidationClass($security, 'form-group'),
+    $this->formHidden($security),
+    $this->formElementErrors($security)
+);
+
+// Submit field
+$submit = $form->get('submit');
+$submit->setAttribute('class', 'btn btn-primary');
+echo $this->formElement($submit);
+
+echo $this->form()->closeTag();
