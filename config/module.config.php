@@ -2,8 +2,6 @@
 
 return array(
     'dm-fileman' => array(
-        'filePathBase' => '/',
-        'fileUrlBase'  => '',
         'filemanager' => array(
             'namespace'    => 'dm-fileman',
             'upload_dir'   => 'public/upload',
