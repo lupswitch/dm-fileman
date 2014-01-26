@@ -113,11 +113,7 @@ class FileManagerController extends AbstractActionController
      */
     public function indexAction()
     {
-        $dir = null; //$this->getFileManager()->getItem(FileManager::CACHE_KEY_LAST_PATH);
-
-        $dir = $dir ? $dir : '/';
-
-        return $this->redirect()->toRoute('filemanager/list', array('dir' => $dir));
+        return $this->redirect()->toRoute('filemanager/list', array('dir' => ''));
     }
 
     /**

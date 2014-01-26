@@ -2,15 +2,10 @@
 
 namespace DmFileman\Service\FileManager;
 
-use Zend\Cache\Storage\StorageInterface;
 use SplFileInfo;
 
 class FileManager
 {
-    const CACHE_KEY_DIR       = 'dir';
-    const CACHE_KEY_FILES     = 'files';
-    const CACHE_KEY_LAST_PATH = 'last-path';
-
     const PATH_ORIG  = 'orig';
     const PATH_THUMB = 'thumb';
 
@@ -30,21 +25,15 @@ class FileManager
     /** @var string */
     protected $currentPath;
 
-    /** @var StorageInterface */
-    protected $cacheStorage;
-
     /** @var Factory */
     protected $factory;
 
     /**
-     * @param StorageInterface $cacheStorage
      * @param Factory          $factory
      * @param array            $config
      */
-    public function __construct(StorageInterface $cacheStorage, Factory $factory, $config)
+    public function __construct(Factory $factory, $config)
     {
-        $this->cacheStorage = $cacheStorage;
-
         $this->factory = $factory;
 
         $this->namespace = $config[static::CONFIG_NAMESPACE];
@@ -68,31 +57,6 @@ class FileManager
     protected function getKey($key)
     {
         return $this->namespace . '/' . $key;
-    }
-
-    /**
-     * @param string $key
-     *
-     * @return mixed
-     */
-    public function getItem($key)
-    {
-        $key = $this->getKey($key);
-
-        return $this->cacheStorage->getItem($key);
-    }
-
-    /**
-     * @param string $key
-     * @param bool   $newValue
-     *
-     * @return bool
-     */
-    public function setItem($key, $newValue)
-    {
-        $key = $this->getKey($key);
-
-        return $this->cacheStorage->setItem($key, $newValue);
     }
 
     /**
@@ -143,8 +107,6 @@ class FileManager
     public function getList($currentDir = null)
     {
         $currentDir = is_null($currentDir) ? $this->currentPath : $currentDir;
-
-        $this->setItem(static::CACHE_KEY_LAST_PATH, $currentDir);
 
         $origPath = $this->getOrigDir($currentDir);
 

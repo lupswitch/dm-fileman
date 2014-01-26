@@ -10,9 +10,6 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     private $sut;
 
     /** @var \PHPUnit_Framework_MockObject_MockObject */
-    private $cacheStorage;
-
-    /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $factory;
 
     /** @var string */
@@ -30,18 +27,13 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['getFilesystemIterator', 'getFileInfo', 'getSplFileInfo'])
             ->getMock();
 
-        $this->cacheStorage = $this->getMockBuilder('Zend\Cache\Storage\StorageInterface')
-            ->setMethods(['setItem'])
-            ->disableAutoload()
-            ->getMock();
-
         $config = [
             FileManagerFileManager::CONFIG_NAMESPACE => $this->namespace,
             FileManagerFileManager::CONFIG_BASE_DIR  => $this->baseDir,
             FileManagerFileManager::CONFIG_BASE_PATH => $this->basePath
         ];
 
-        $this->sut = new FileManagerFileManager($this->cacheStorage, $this->factory, $config);
+        $this->sut = new FileManagerFileManager($this->factory, $config);
     }
 
     /**
@@ -107,8 +99,6 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetListReturnsEmptyByDefault()
     {
-        $this->cacheStorage->expects($this->any())->method('setItem');
-
         $this->factory
             ->expects($this->any())
             ->method('getFileInfo')
@@ -134,8 +124,6 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetListReturnsList()
     {
-        $this->cacheStorage->expects($this->any())->method('setItem');
-
         $fileInfoMock = $this->getFileInfo();
 
         $this->factory

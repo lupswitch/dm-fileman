@@ -14,6 +14,9 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src</directory>
+            <exlude>
+                <file>src/DmFileman/Module.php</file>
+            </exlude>
         </whitelist>
     </filter>
     <logging>

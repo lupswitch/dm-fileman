@@ -1,6 +1,19 @@
 <?php
 
 return array(
+    'dm-fileman' => array(
+        'filePathBase' => '/',
+        'fileUrlBase'  => '',
+        'filemanager' => array(
+            'namespace'    => 'dm-fileman',
+            'upload_dir'   => 'public/upload',
+            'upload_path'  => '/upload',
+        ),
+        'thumbs' => array(
+            'width'  => 128,
+            'height' => 128,
+        )
+    ),
     'router' => array(
         'routes' => array(
             'filemanager' => array(

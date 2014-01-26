@@ -40,14 +40,6 @@ class Module
     {
         return array(
             'factories'  => array(
-                'Zend\Cache\Storage\StorageInterface' => function (ServiceManager $serviceManager) {
-                    /** @var Helper\Options $options */
-                    $options = $serviceManager->get('DmFileman\Helper\Options');
-
-                    $cacheStorage = \Zend\Cache\StorageFactory::factory($options->getCacheStorage());
-
-                    return $cacheStorage;
-                },
                 'DmFileman\Helper\Options' => function (ServiceManager $serviceManager) {
                     $options = $serviceManager->get('config');
 
@@ -56,25 +48,29 @@ class Module
                     return $optionsHelper;
                 },
                 'DmFileman\Service\FileManager' => function (ServiceManager $serviceManager) {
-                    $cacheStorage = $serviceManager->get('Zend\Cache\Storage\StorageInterface');
-
-                    $config = $serviceManager->get('config')['filemanager'];
+                    /** @var Helper\Options $config */
+                    $options = $serviceManager->get('DmFileman\Helper\Options');
 
                     $factory = new Service\FileManager\Factory;
 
-                    $fileManager = new Service\FileManager\FileManager($cacheStorage, $factory, $config);
+                    $fileManager = new Service\FileManager\FileManager($factory, $options->getFileManagerOptions());
 
                     return $fileManager;
                 },
                 'DmFileman\Service\Thumbnailer' => function (ServiceManager $serviceManager) {
-                    $thumbConfig = $serviceManager->get('config')['filemanager']['thumbs'];
+                    /** @var Helper\Options $config */
+                    $options = $serviceManager->get('DmFileman\Helper\Options');
 
                     /** @var \Imagine\Gd\Imagine $imagine */
                     $imagine = $serviceManager->get('Imagine\Gd\Imagine');
 
                     $factory = new Service\Thumbnailer\Factory();
 
-                    $thumbnailer = new Service\Thumbnailer\Thumbnailer($imagine, $factory, $thumbConfig);
+                    $thumbnailer = new Service\Thumbnailer\Thumbnailer(
+                        $imagine,
+                        $factory,
+                        $options->getThumbsOptions()
+                    );
 
                     return $thumbnailer;
                 },
