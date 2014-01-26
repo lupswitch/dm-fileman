@@ -39,9 +39,6 @@ class Module
     public function getServiceConfig()
     {
         return array(
-            'invokables' => array(
-                'Imagine\Gd\Imagine' => 'Imagine\Gd\Imagine',
-            ),
             'factories'  => array(
                 'Zend\Cache\Storage\StorageInterface' => function (ServiceManager $serviceManager) {
                     /** @var Helper\Options $options */
