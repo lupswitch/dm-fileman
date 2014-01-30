@@ -12,6 +12,15 @@ return array(
             'height' => 128,
         )
     ),
+    'guards' => array(
+        array(
+            'type' => 'Regexp',
+            'options' => array(
+                'regexp' => '(/filemanager/?.*)',
+                'assertion' => 'RouteGuard\Assertion\Zf2Authentication\IsLoggedIn'
+            ),
+        ),
+    ),
     'router' => array(
         'routes' => array(
             'filemanager' => array(
