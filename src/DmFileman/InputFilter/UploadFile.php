@@ -13,6 +13,12 @@ class UploadFile extends InputFilter
     /** @var FileInput */
     protected $fileInput;
 
+    /** @var int */
+    protected $maxSize = 20480000;
+
+    /** @var array|string */
+    protected $extensions;
+
     /**
      * @param $currentDir
      *
@@ -23,6 +29,22 @@ class UploadFile extends InputFilter
         $this->currentDir = $currentDir;
 
         return $this;
+    }
+
+    /**
+     * @param int $maxSize
+     */
+    public function setMaxSize($maxSize)
+    {
+        $this->maxSize = $maxSize;
+    }
+
+    /**
+     * @param array|string $extensions
+     */
+    public function setExtensions($extensions)
+    {
+        $this->extensions = $extensions;
     }
 
     /**
@@ -47,14 +69,44 @@ class UploadFile extends InputFilter
 
     public function init()
     {
-        // File Input
         $fileInput = $this->getFileInput();
 
         $fileInput->setName('file');
         $fileInput->setRequired(true);
 
-        $fileInput->getValidatorChain()->attachByName('filesize', array('max' => 20480000));
+        $this->addFileValidation($fileInput);
+        $this->addFileFilter($fileInput);
 
+
+        $this->add($fileInput);
+
+        $this->add(
+            array(
+                'name'       => 'security',
+                'required'   => true,
+            )
+        );
+    }
+
+    /**
+     * @param FileInput $fileInput
+     */
+    private function addFileValidation(FileInput $fileInput)
+    {
+        if ($this->maxSize) {
+            $fileInput->getValidatorChain()->attachByName('filesize', array('max' => $this->maxSize));
+        }
+
+        if (count($this->extensions)) {
+            $fileInput->getValidatorChain()->attachByName('extension', array('extension' => $this->extensions));
+        }
+    }
+
+    /**
+     * @param FileInput $fileInput
+     */
+    private function addFileFilter(FileInput $fileInput)
+    {
         $fileInput->getFilterChain()->attachByName(
             'filerenameupload',
             array(
@@ -63,23 +115,6 @@ class UploadFile extends InputFilter
                 'randomize'            => false,
                 'use_upload_name'      => true,
                 'use_upload_extension' => true,
-            )
-        );
-
-        $this->add($fileInput);
-
-        $this->add(
-            array(
-                'name'       => 'security',
-                'required'   => true,
-                /* csrf is autoadded
-                'validators' => array(
-                    array(
-                        'name'    => 'Csrf',
-                        'options' => array(
-                        ),
-                    ),
-                ),*/
             )
         );
     }
