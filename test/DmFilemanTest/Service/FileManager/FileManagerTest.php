@@ -2,12 +2,12 @@
 
 namespace DmFilemanTest\Service\FileManager;
 
-use DmFileman\Service\FileManager\FileManager as FileManagerFileManager;
+use DmFileman\Service\FileManager\FileManager;
 use org\bovigo\vfs;
 
 class FileManagerTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var FileManagerFileManager */
+    /** @var FileManager */
     private $sut;
 
     /** @var \PHPUnit_Framework_MockObject_MockObject */
@@ -45,11 +45,11 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $config = [
-            FileManagerFileManager::CONFIG_BASE_DIR  => $this->baseDir,
-            FileManagerFileManager::CONFIG_BASE_PATH => $this->basePath,
+            FileManager::CONFIG_BASE_DIR  => $this->baseDir,
+            FileManager::CONFIG_BASE_PATH => $this->basePath,
         ];
 
-        $this->sut = new FileManagerFileManager($this->factory, $config);
+        $this->sut = new FileManager($this->factory, $config);
     }
 
     /**
