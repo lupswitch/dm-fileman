@@ -3,6 +3,7 @@
 namespace DmFilemanTest\Service\FileManager;
 
 use DmFileman\Service\FileManager\FileManager as FileManagerFileManager;
+use org\bovigo\vfs;
 
 class FileManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,24 +14,39 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     private $factory;
 
     /** @var string */
-    private $namespace = 'foo';
+    private $baseDir;
 
     /** @var string */
-    private $baseDir = 'bar';
-
-    /** @var string */
-    private $basePath = 'baz';
+    private $basePath;
 
     public function setUp()
     {
+        $structure = [
+            'orig' => [
+                'img.jpg' => 'abcd',
+                'old' => [
+                    'img.jpg' => 'cdab'
+                ],
+            ],
+            'thumb' => [
+                'img.jpg' => 'bcde',
+                'old' => [
+                    'img.jpg' => 'cdab'
+                ],
+            ]
+        ];
+
+        $this->uploadDir = vfs\vfsStream::setup('upload', 0777, $structure);
+        $this->baseDir   = vfs\vfsStream::url('upload');
+        $this->basePath  = '/upload';
+
         $this->factory = $this->getMockBuilder('DmFileman\Service\FileManager\Factory')
             ->setMethods(['getFilesystemIterator', 'getFileInfo', 'getSplFileInfo'])
             ->getMock();
 
         $config = [
-            FileManagerFileManager::CONFIG_NAMESPACE => $this->namespace,
             FileManagerFileManager::CONFIG_BASE_DIR  => $this->baseDir,
-            FileManagerFileManager::CONFIG_BASE_PATH => $this->basePath
+            FileManagerFileManager::CONFIG_BASE_PATH => $this->basePath,
         ];
 
         $this->sut = new FileManagerFileManager($this->factory, $config);
@@ -62,7 +78,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
             'getTypeThumbnailPath'
         ];
 
-        $fileInfoMock = $this->getMockBuilder('DmFileman\Entity\FileInfo')
+        $fileInfoMock = $this->getMockBuilder('DmFileman\Service\FileManager\FileInfo')
             ->setMethods($fileInfoMethods)
             ->disableOriginalConstructor()
             ->getMock();
@@ -83,18 +99,6 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    private function getFilesystemIterator()
-    {
-        $fsIteratorMock = $this->getMockBuilder('FilesystemIterator')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        return $fsIteratorMock;
-    }
-
-    /**
      * @covers \DmFileman\Service\FileManager\FileManager
      */
     public function testGetListReturnsEmptyByDefault()
@@ -112,7 +116,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
         $this->factory
             ->expects($this->any())
             ->method('getFilesystemIterator')
-            ->will($this->returnValue($this->getFilesystemIterator()));
+            ->will($this->returnValue([]));
 
         $result = $this->sut->getList();
 
@@ -139,7 +143,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
         $this->factory
             ->expects($this->any())
             ->method('getFilesystemIterator')
-            ->will($this->returnValue($this->getFilesystemIterator()));
+            ->will($this->returnValue([]));
 
         $result = $this->sut->getList('ok');
 
@@ -149,17 +153,80 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \DmFileman\Service\FileManager\FileManager
      */
-    public function testCreate()
+    public function testGetListReturnsListWithRealFiles()
     {
-        $this->markTestIncomplete();
+        $fileInfoMock = $this->getFileInfo();
+        $splFileInfoMock = $this->getSplFileInfo();
+
+        $this->factory
+            ->expects($this->any())
+            ->method('getFileInfo')
+            ->will($this->returnValue($fileInfoMock));
+
+        $this->factory
+            ->expects($this->any())
+            ->method('getSplFileInfo')
+            ->will($this->returnValue($splFileInfoMock));
+
+        $this->factory
+            ->expects($this->any())
+            ->method('getFilesystemIterator')
+            ->will($this->returnValue([$splFileInfoMock, $splFileInfoMock]));
+
+        $result = $this->sut->getList('/');
+
+        $this->assertSame([$fileInfoMock, $fileInfoMock], $result);
     }
 
     /**
      * @covers \DmFileman\Service\FileManager\FileManager
      */
-    public function testDelete()
+    public function testCreateCreatesNewDirectories()
     {
-        $this->markTestIncomplete();
+        $actualResult = $this->sut->create('/new');
+
+        $this->assertTrue($actualResult);
+
+        $this->assertFileExists(vfs\vfsStream::url('upload/orig/new'));
+        $this->assertFileExists(vfs\vfsStream::url('upload/thumb/new'));
+    }
+
+    /**
+     * @covers \DmFileman\Service\FileManager\FileManager
+     */
+    public function testCreateReturnsFalseIfDirectoryAlreadyExists()
+    {
+        $actualResult = $this->sut->create('/old');
+
+        $this->assertFalse($actualResult);
+    }
+
+    /**
+     * @covers \DmFileman\Service\FileManager\FileManager
+     */
+    public function testDeleteDeletesFiles()
+    {
+        $this->assertFileExists(vfs\vfsStream::url('upload/orig/old/img.jpg'));
+
+        $actualResult = $this->sut->delete('/old/img.jpg');
+
+        $this->assertTrue($actualResult);
+        $this->assertFileExists(vfs\vfsStream::url('upload/orig/old'));
+        $this->assertFileNotExists(vfs\vfsStream::url('upload/orig/old/img.jpg'));
+    }
+
+    /**
+     * @covers \DmFileman\Service\FileManager\FileManager
+     */
+    public function testDeleteDeletesFolders()
+    {
+        $this->assertFileExists(vfs\vfsStream::url('upload/orig/old'));
+
+        $actualResult = $this->sut->delete('/old');
+
+        $this->assertTrue($actualResult);
+        $this->assertFileExists(vfs\vfsStream::url('upload/orig'));
+        $this->assertFileNotExists(vfs\vfsStream::url('upload/orig/old'));
     }
 
     /**
@@ -167,6 +234,9 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteTree()
     {
-        $this->markTestIncomplete();
+        $actualResult = $this->sut->deleteTree(vfs\vfsStream::url('upload/orig'));
+
+        $this->assertTrue($actualResult);
+        $this->assertFileNotExists(vfs\vfsStream::url('upload/orig'));
     }
 }
