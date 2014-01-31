@@ -110,7 +110,7 @@ class FileManager
         foreach ($iterator as $splFileInfo) {
             $fileInfo = $this->factory->getFileInfo($currentDir, $this->getOrigPath(), $this->getThumbPath());
 
-            $fileInfo->setFromSplFileInfo($splFileInfo);
+            $fileInfo->setSplFileInfo($splFileInfo);
 
             $list[] = $fileInfo;
         }
@@ -132,7 +132,7 @@ class FileManager
 
         $splFileInfo = $this->factory->getSplFileInfo($this->getOrigDir($dir));
 
-        $fileInfo->setFromSplFileInfo($splFileInfo);
+        $fileInfo->setSplFileInfo($splFileInfo);
 
         if ($displayName) {
             $fileInfo->setDisplayName($displayName);

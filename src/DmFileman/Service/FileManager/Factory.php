@@ -4,6 +4,8 @@ namespace DmFileman\Service\FileManager;
 
 use SplFileInfo;
 use FilesystemIterator;
+use DmFileman\Helper\FileInfo\Formatter;
+use DmFileman\Helper\FileInfo\Path;
 
 class Factory
 {
@@ -16,7 +18,9 @@ class Factory
      */
     public function getFileInfo($currentDir, $origPath, $thumbPath)
     {
-        return new FileInfo($currentDir, $origPath, $thumbPath);
+        $fileInfo = new FileInfo($currentDir, $origPath, $thumbPath, new Formatter, new Path);
+
+        return $fileInfo;
     }
 
     /**

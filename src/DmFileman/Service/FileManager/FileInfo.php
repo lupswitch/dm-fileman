@@ -51,7 +51,7 @@ class FileInfo
      * @param Formatter  $formatter
      * @param PathHelper $pathHelper
      */
-    public function __construct($relativePath, $origBasePath, $thumbBasePath, $formatter = null, $pathHelper = null)
+    public function __construct($relativePath, $origBasePath, $thumbBasePath, $formatter, $pathHelper)
     {
         $this->relativePath = $relativePath;
 
@@ -65,53 +65,9 @@ class FileInfo
     }
 
     /**
-     * @param Formatter $formatter
-     */
-    public function setFormatter(Formatter $formatter)
-    {
-        $this->formatter = $formatter;
-    }
-
-    /**
-     * @FIXME: Make sure helper is always injected
-     *
-     * @return Formatter
-     */
-    protected function getFormatter()
-    {
-        if (null === $this->formatter) {
-            $this->formatter = new Formatter;
-        }
-
-        return $this->formatter;
-    }
-
-    /**
-     * @param PathHelper $pathHelper
-     */
-    public function setPath(PathHelper $pathHelper)
-    {
-        $this->pathHelper = $pathHelper;
-    }
-
-    /**
-     * @FIXME: Make sure helper is always injected
-     *
-     * @return PathHelper
-     */
-    protected function getPathHelper()
-    {
-        if (null === $this->pathHelper) {
-            $this->pathHelper = new PathHelper;
-        }
-
-        return $this->pathHelper;
-    }
-
-    /**
      * @param SplFileInfo $splFileInfo
      */
-    public function setFromSplFileInfo(SplFileInfo $splFileInfo)
+    public function setSplFileInfo(SplFileInfo $splFileInfo)
     {
         $this->splFileInfo = $splFileInfo;
     }
@@ -147,7 +103,7 @@ class FileInfo
      */
     public function getSize($rawSize = false)
     {
-        return $this->getFormatter()->formatSize($this->splFileInfo, $rawSize);
+        return $this->formatter->formatSize($this->splFileInfo, $rawSize);
     }
 
     /**
@@ -155,7 +111,7 @@ class FileInfo
      */
     public function getPermissions()
     {
-        return $this->getFormatter()->formatPermissions($this->splFileInfo);
+        return $this->formatter->formatPermissions($this->splFileInfo);
     }
 
     /**
@@ -163,7 +119,7 @@ class FileInfo
      */
     public function getOwner()
     {
-        return $this->getFormatter()->formatOwner($this->splFileInfo);
+        return $this->formatter->formatOwner($this->splFileInfo);
     }
 
     /**
@@ -171,7 +127,7 @@ class FileInfo
      */
     public function getGroup()
     {
-        return $this->getFormatter()->formatGroup($this->splFileInfo);
+        return $this->formatter->formatGroup($this->splFileInfo);
     }
 
     /**
@@ -229,7 +185,7 @@ class FileInfo
             return $this->displayName;
         }
 
-        if ($this->splFileInfo && $this->splFileInfo->getFilename()) {
+        if ($this->splFileInfo) {
             return $this->splFileInfo->getFilename();
         }
 
@@ -255,7 +211,7 @@ class FileInfo
      */
     public function getRelativePath($withFilename = false)
     {
-        return $this->getPathHelper()
+        return $this->pathHelper
             ->getRelativePath($withFilename, $this->withFilenameDisabled, $this->splFileInfo, $this->relativePath);
     }
 
@@ -278,7 +234,7 @@ class FileInfo
      */
     public function getThumbnailPath()
     {
-        return $this->getPathHelper()
+        return $this->pathHelper
             ->getThumbnailPath(
                 $this->splFileInfo,
                 $this->getPathname(),
@@ -291,9 +247,9 @@ class FileInfo
     /**
      * @return string
      */
-    protected function getImageThumbnailPath()
+    public function getImageThumbnailPath()
     {
-        return $this->getPathHelper()
+        return $this->pathHelper
             ->getImageThumbnailPath(
                 $this->splFileInfo,
                 $this->getPathname(),
@@ -308,7 +264,7 @@ class FileInfo
      */
     public function getTypeThumbnailPath()
     {
-        return $this->getPathHelper()->getTypeThumbnailPath($this->splFileInfo);
+        return $this->pathHelper->getTypeThumbnailPath($this->splFileInfo);
     }
 
     /**
