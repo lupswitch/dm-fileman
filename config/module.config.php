@@ -4,7 +4,7 @@ return array(
     'dm-fileman' => array(
         'filemanager' => array(
             'namespace'    => 'dm-fileman',
-            'upload_dir'   => 'public/upload',
+            'upload_dir'   => './public/upload',
             'upload_path'  => '/upload',
         ),
         'thumbs' => array(

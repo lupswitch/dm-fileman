@@ -9,12 +9,8 @@ class FileManager
     const PATH_ORIG  = 'orig';
     const PATH_THUMB = 'thumb';
 
-    const CONFIG_NAMESPACE = 'namespace';
     const CONFIG_BASE_DIR  = 'upload_dir';
     const CONFIG_BASE_PATH = 'upload_path';
-
-    /** @var string */
-    protected $namespace;
 
     /** @var string */
     protected $baseDir;
@@ -23,7 +19,7 @@ class FileManager
     protected $basePath;
 
     /** @var string */
-    protected $currentPath;
+    protected $currentPath = '';
 
     /** @var Factory */
     protected $factory;
@@ -36,9 +32,8 @@ class FileManager
     {
         $this->factory = $factory;
 
-        $this->namespace = $config[static::CONFIG_NAMESPACE];
-        $this->baseDir   = $config[static::CONFIG_BASE_DIR];
-        $this->basePath  = $config[static::CONFIG_BASE_PATH];
+        $this->baseDir  = $config[static::CONFIG_BASE_DIR];
+        $this->basePath = $config[static::CONFIG_BASE_PATH];
     }
 
     /**
@@ -50,23 +45,13 @@ class FileManager
     }
 
     /**
-     * @param string $key
-     *
-     * @return string
-     */
-    protected function getKey($key)
-    {
-        return $this->namespace . '/' . $key;
-    }
-
-    /**
      * @param string $dir
      *
      * @return string
      */
     public function getOrigDir($dir = '')
     {
-        return './' . $this->baseDir . '/' . static::PATH_ORIG . $dir;
+        return $this->baseDir . '/' . static::PATH_ORIG . $dir;
     }
 
     /**
@@ -76,7 +61,7 @@ class FileManager
      */
     public function getThumbDir($dir = '')
     {
-        return './' . $this->baseDir . '/' . static::PATH_THUMB . $dir;
+        return $this->baseDir . '/' . static::PATH_THUMB . $dir;
     }
 
     /**
@@ -162,14 +147,6 @@ class FileManager
     }
 
     /**
-     * @return bool;
-     */
-    public function refresh()
-    {
-        return true;
-    }
-
-    /**
      * @param string      $directoryName
      * @param string|null $currentDir
      *
@@ -178,7 +155,6 @@ class FileManager
     public function create($directoryName, $currentDir = null)
     {
         $currentDir = is_null($currentDir) ? $this->currentPath : $currentDir;
-
         $newOrigDir = $this->getOrigDir($currentDir) . $directoryName;
 
         if (!file_exists($newOrigDir)) {
@@ -192,14 +168,7 @@ class FileManager
             mkdir($newThumbDir, 0777, true);
         }
 
-        return true;
-    }
 
-    /**
-     * @return bool;
-     */
-    public function update()
-    {
         return true;
     }
 
@@ -248,13 +217,5 @@ class FileManager
         }
 
         return rmdir($dir);
-    }
-
-    /**
-     * @return bool;
-     */
-    public function upload()
-    {
-        return true;
     }
 }
