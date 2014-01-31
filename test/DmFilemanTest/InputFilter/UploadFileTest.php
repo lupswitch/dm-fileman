@@ -13,49 +13,6 @@ class UploadFileTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->sut = new UploadFile();
-
-        $this->sut->setCurrentDir('');
-
-        $this->sut->init();
-    }
-
-    /**
-     * @return array
-     */
-    private function fileDataProvider()
-    {
-        return [
-            [
-                null,
-                ['isEmpty'],
-                Form::FILE
-            ],
-            [
-                false,
-                ['isEmpty'],
-                Form::FILE
-            ],
-            [
-                '',
-                ['isEmpty'],
-                Form::FILE
-            ],
-            [
-                'foo',
-                [],
-                Form::FILE
-            ],
-            [
-                str_repeat('abcdefghij', 10000),
-                [],
-                Form::FILE
-            ],
-            [
-                str_repeat('abcdefghij', 10000) . 'a',
-                ['stringLengthTooLong'],
-                Form::FILE
-            ],
-        ];
     }
 
     /**
@@ -109,6 +66,10 @@ class UploadFileTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidation($nameData, array $expectedMessages, $inputName)
     {
+        $this->sut->setCurrentDir('');
+
+        $this->sut->init();
+
         $this->sut->setData([$inputName => $nameData]);
 
         $this->sut->isValid();
@@ -133,8 +94,84 @@ class UploadFileTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testSkipped()
+    public function testFileValidatorSAreSet()
     {
-        $this->markTestIncomplete('File upload is not yet tested');
+        $validatorChainMock = $this->getMockBuilder('Zend\Validator\ValidatorChain')
+            ->setMethods(['attachByName'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $filterChainMock = $this->getMockBuilder('Zend\Filter\FilterChain')
+            ->setMethods(['attachByName'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $fileInputMock = $this->getMockBuilder('Zend\InputFilter\FileInput')
+            ->setMethods(['getValidatorChain', 'getFilterChain'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $fileInputMock
+            ->expects($this->exactly(2))
+            ->method('getValidatorChain')
+            ->will($this->returnValue($validatorChainMock));
+        $validatorChainMock
+            ->expects($this->exactly(2))
+            ->method('attachByName')
+            ->will($this->returnValue($validatorChainMock));
+
+        $fileInputMock
+            ->expects($this->never())
+            ->method('getFilterChain')
+            ->will($this->returnValue($filterChainMock));
+        $filterChainMock
+            ->expects($this->never())
+            ->method('attachByName')
+            ->will($this->returnValue($filterChainMock));
+
+        $this->sut->setFileInput($fileInputMock);
+
+        $this->sut->setMaxSize(1000);
+        $this->sut->setExtensions(['jpg']);
+
+        $this->sut->init();
+    }
+
+    public function testRenameFilterIsSet()
+    {
+        $validatorChainMock = $this->getMockBuilder('Zend\Validator\ValidatorChain')
+            ->setMethods(['attachByName'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $filterChainMock = $this->getMockBuilder('Zend\Filter\FilterChain')
+            ->setMethods(['attachByName'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $fileInputMock = $this->getMockBuilder('Zend\InputFilter\FileInput')
+            ->setMethods(['getValidatorChain', 'getFilterChain', 'setName', 'setRequired'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $fileInputMock
+            ->expects($this->never())
+            ->method('getValidatorChain')
+            ->will($this->returnValue($validatorChainMock));
+        $validatorChainMock
+            ->expects($this->never())
+            ->method('attachByName')
+            ->will($this->returnValue($validatorChainMock));
+
+        $fileInputMock
+            ->expects($this->exactly(1))
+            ->method('getFilterChain')
+            ->will($this->returnValue($filterChainMock));
+        $filterChainMock
+            ->expects($this->exactly(1))
+            ->method('attachByName')
+            ->will($this->returnValue($filterChainMock));
+
+        $this->sut->setFileInput($fileInputMock);
+
+        $this->sut->setCurrentDir('');
+
+        $this->sut->init();
     }
 }
