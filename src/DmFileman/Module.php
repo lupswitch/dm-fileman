@@ -47,6 +47,17 @@ class Module
 
                     return $optionsHelper;
                 },
+                'DmFileman\InputFilter\UploadFile' => function (ServiceManager $serviceManager) {
+                    /** @var Helper\Options $optionsHelper */
+                    $optionsHelper = $serviceManager->get('DmFileman\Helper\Options');
+
+                    $uploadFileFilter = new InputFilter\UploadFile();
+
+                    $uploadFileFilter->setExtensions($optionsHelper->getExtensions());
+                    $uploadFileFilter->setMaxSize($optionsHelper->getMaxSize());
+
+                    return $uploadFileFilter;
+                },
                 'DmFileman\Service\FileManager' => function (ServiceManager $serviceManager) {
                     /** @var Helper\Options $config */
                     $options = $serviceManager->get('DmFileman\Helper\Options');
@@ -97,7 +108,9 @@ class Module
                     $userText = new View\Helper\UserText();
 
                     $createFileForm->setInputFilter(new InputFilter\CreateDirectory());
-                    $uploadFileForm->setInputFilter(new InputFilter\UploadFile());
+                    /** @var InputFilter\UploadFile $inputFileFilter */
+                    $inputFileFilter = $serviceManager->get('DmFileman\InputFilter\UploadFile');
+                    $uploadFileForm->setInputFilter($inputFileFilter);
                     $deleteFileForm->setInputFilter(new InputFilter\DeleteFile());
 
                     /** @var InputFilter\UploadFile $uploadFileFilter */

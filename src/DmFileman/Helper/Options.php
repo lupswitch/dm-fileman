@@ -36,4 +36,24 @@ class Options extends DmCommonOptions
             ? $this->options['dm-fileman']['thumbs']
             : '';
     }
+
+    /**
+     * @return array
+     */
+    public function getExtensions()
+    {
+        return isset($this->options['dm-fileman']['file_upload']['extensions'])
+            ? $this->options['dm-fileman']['file_upload']['extensions']
+            : array();
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxSize()
+    {
+        return isset($this->options['dm-fileman']['file_upload']['file_upload'])
+            ? $this->options['dm-fileman']['file_upload']['file_upload']
+            : 0;
+    }
 }

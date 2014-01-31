@@ -10,7 +10,11 @@ return array(
         'thumbs' => array(
             'width'  => 128,
             'height' => 128,
-        )
+        ),
+        'file_upload' => array(
+            'max_size' => 20480000,
+            'extensions' => array('jpg', 'png', 'gif')
+        ),
     ),
     'guards' => array(
         array(
