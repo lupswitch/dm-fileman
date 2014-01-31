@@ -2,9 +2,9 @@
 
 namespace DmFileman\View\Helper;
 
-use \Zend\View\Helper\AbstractHelper;
+use DmCommon\View\Helper\UserText as DmCommonUserText;
 
-class UserText extends AbstractHelper
+class UserText extends DmCommonUserText
 {
     const DIRECTORY  = 'directory';
     const FILE       = 'file';
