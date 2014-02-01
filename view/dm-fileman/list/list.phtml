@@ -2,21 +2,21 @@
     <?php echo $this->partial('/partial/fileman-nav.phtml') ?>
 
     <div class="create-directory hidden" id="create-directory-form">
-        <?php echo $this->partial('/dm-fileman/file-manager/create-dir.phtml'); ?>
+        <?php echo $this->partial('/dm-fileman/create-directory/create-dir.phtml'); ?>
     </div>
 
     <div class="delete-file hidden" id="delete-file-form">
-        <?php echo $this->partial('/dm-fileman/file-manager/delete-file.phtml'); ?>
+        <?php echo $this->partial('/dm-fileman/delete-file/delete-file.phtml'); ?>
     </div>
 
     <div class="upload-file hidden" id="upload-file-form">
-        <?php echo $this->partial('/dm-fileman/file-manager/upload-file.phtml'); ?>
+        <?php echo $this->partial('/dm-fileman/upload-file/upload-file.phtml'); ?>
     </div>
 
     <?php echo $this->partial('/partial/messages.phtml') ?>
 
     <div class="row file-thumbs" id="file-thumbs">
-        <?php echo $this->partial('/dm-fileman/file-manager/file-thumbs.phtml'); ?>
+        <?php echo $this->partial('/dm-fileman/list/file-thumbs.phtml'); ?>
     </div>
 
 </div>
