@@ -3,9 +3,12 @@
 namespace DmFilemanTest\Controller;
 
 use DmFileman\Controller\UploadFileController;
+use DmTest\Controller\TestCaseTrait;
 
 class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
 {
+    use TestCaseTrait;
+
     /** @var UploadFileController */
     protected $sut;
 
@@ -29,7 +32,7 @@ class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->uploadFileFormMock = $this->getMockBuilder('DmFileman\Form\UploadFileForm')
-            ->setMethods(['build', 'getMessages', 'getInputFilter'])
+            ->setMethods(['build', 'getMessages', 'getInputFilter', 'isValid', 'getData'])
             ->getMock();
 
         $this->thumbnailerMock = $this->getMockBuilder('DmFileman\Service\Thumbnailer\Thumbnailer')
@@ -52,8 +55,147 @@ class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers DmFileman\Controller\UploadFileController
      */
-    public function testUploadAction()
+    public function testUploadActionAddsErrorMessageToFlashMessengerByDefault()
     {
-        $this->markTestIncomplete();
+        $responseMock = $this->getResponseMock();
+
+        $flashMessengerMock = $this->getFlashMessengerPluginMock(0, 1);
+        $redirectMock       = $this->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->getPluginMock($flashMessengerMock, $redirectMock);
+
+        $this->sut->setPluginManager($pluginMock);
+
+        $this->uploadFileFormMock
+            ->expects($this->once())
+            ->method('getMessages')
+            ->will($this->returnValue([]));
+
+        $this->sut->setCurrentPath('');
+
+        $actualResult = $this->sut->uploadAction();
+
+        $this->assertEquals($responseMock, $actualResult);
+    }
+
+    /**
+     * @covers DmFileman\Controller\UploadFileController
+     */
+    public function testUploadActionAddsErrorMessageToFlashMessengerWhenFormIsNotValid()
+    {
+        $responseMock = $this->getResponseMock();
+
+        $flashMessengerMock = $this->getFlashMessengerPluginMock(0, 1);
+        $redirectMock       = $this->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->getPluginMock($flashMessengerMock, $redirectMock);
+
+        $this->sut->setPluginManager($pluginMock);
+
+        $requestMock = $this->getRequestMock(new \SplFixedArray(0), new \SplFixedArray(0));
+        $this->sut->setRequest($requestMock);
+
+        $inputFilterMock = $this->getMock('Zend\InputFilter\InputFilter', ['init', 'setCurrentDir']);
+        $inputFilterMock->expects($this->any())->method('setCurrentDir')->will($this->returnSelf());
+
+        $this->uploadFileFormMock
+            ->expects($this->once())
+            ->method('getInputFilter')
+            ->will($this->returnValue($inputFilterMock));
+        $this->uploadFileFormMock
+            ->expects($this->once())
+            ->method('isValid')
+            ->will($this->returnValue(false));
+        $this->uploadFileFormMock
+            ->expects($this->once())
+            ->method('getMessages')
+            ->will($this->returnValue([]));
+
+        $this->sut->setCurrentPath('');
+
+        $actualResult = $this->sut->uploadAction();
+
+        $this->assertEquals($responseMock, $actualResult);
+    }
+
+    /**
+     * @covers DmFileman\Controller\UploadFileController
+     */
+    public function testUploadActionAddsUploadErrorsToFlashMessenger()
+    {
+        $responseMock = $this->getResponseMock();
+
+        $flashMessengerMock = $this->getFlashMessengerPluginMock(0, 3);
+        $redirectMock       = $this->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->getPluginMock(
+            $flashMessengerMock,
+            $flashMessengerMock,
+            $flashMessengerMock,
+            $redirectMock
+        );
+
+        $this->sut->setPluginManager($pluginMock);
+
+        $requestMock = $this->getRequestMock(new \SplFixedArray(0), new \SplFixedArray(0));
+        $this->sut->setRequest($requestMock);
+
+        $inputFilterMock = $this->getMock('Zend\InputFilter\InputFilter', ['init', 'setCurrentDir']);
+        $inputFilterMock->expects($this->any())->method('setCurrentDir')->will($this->returnSelf());
+
+        $this->uploadFileFormMock
+            ->expects($this->once())
+            ->method('getInputFilter')
+            ->will($this->returnValue($inputFilterMock));
+        $this->uploadFileFormMock
+            ->expects($this->once())
+            ->method('isValid')
+            ->will($this->returnValue(false));
+        $this->uploadFileFormMock
+            ->expects($this->once())
+            ->method('getMessages')
+            ->will($this->returnValue([['foo'], ['bar']]));
+
+        $this->sut->setCurrentPath('');
+
+        $actualResult = $this->sut->uploadAction();
+
+        $this->assertEquals($responseMock, $actualResult);
+    }
+
+    /**
+     * @covers DmFileman\Controller\UploadFileController
+     */
+    public function testUploadActionAddsSuccessMessageToFlashMessengerWhenFormIsValid()
+    {
+        $responseMock = $this->getResponseMock();
+
+        $flashMessengerMock = $this->getFlashMessengerPluginMock(1, 0);
+        $redirectMock       = $this->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->getPluginMock($flashMessengerMock, $redirectMock);
+
+        $this->sut->setPluginManager($pluginMock);
+
+        $requestMock = $this->getRequestMock(new \SplFixedArray(0), new \SplFixedArray(0));
+        $this->sut->setRequest($requestMock);
+
+        $inputFilterMock = $this->getMock('Zend\InputFilter\InputFilter', ['init', 'setCurrentDir']);
+        $inputFilterMock->expects($this->any())->method('setCurrentDir')->will($this->returnSelf());
+
+        $this->uploadFileFormMock
+            ->expects($this->once())
+            ->method('getInputFilter')
+            ->will($this->returnValue($inputFilterMock));
+        $this->uploadFileFormMock
+            ->expects($this->once())
+            ->method('isValid')
+            ->will($this->returnValue(true));
+        $this->uploadFileFormMock
+            ->expects($this->once())
+            ->method('getData')
+            ->will($this->returnValue(['file' => ['type' => '']]));
+
+        $this->sut->setCurrentPath('');
+
+        $actualResult = $this->sut->uploadAction();
+
+        $this->assertEquals($responseMock, $actualResult);
     }
 }
