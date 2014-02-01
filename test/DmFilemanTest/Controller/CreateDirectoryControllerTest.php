@@ -3,9 +3,12 @@
 namespace DmFilemanTest\Controller;
 
 use DmFileman\Controller\CreateDirectoryController;
+use DmTest\Controller\TestCaseTrait;
 
 class CreateDirectoryControllerTest extends \PHPUnit_Framework_TestCase
 {
+    use TestCaseTrait;
+
     /** @var CreateDirectoryController */
     protected $sut;
 
@@ -53,97 +56,6 @@ class CreateDirectoryControllerTest extends \PHPUnit_Framework_TestCase
             $this->thumbnailerMock,
             $this->userTextMock
         );
-    }
-
-
-    /**
-     * @param \PHPUnit_Framework_MockObject_MockObject $flashMessengerMock
-     * @param \PHPUnit_Framework_MockObject_MockObject $redirectMock
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    private function getPluginMock($flashMessengerMock, $redirectMock)
-    {
-        $pluginManagerMock = $this->getMockBuilder('Zend\Mvc\Controller\PluginManager')
-            ->setMethods(['get'])
-            ->getMock();
-
-        $pluginManagerMock
-            ->expects($this->at(0))
-            ->method('get')
-            ->will($this->returnValue($flashMessengerMock));
-
-        $pluginManagerMock
-            ->expects($this->at(1))
-            ->method('get')
-            ->will($this->returnValue($redirectMock));
-
-        return $pluginManagerMock;
-    }
-
-    /**
-     * @param int $successCount
-     * @param int $errorCount
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    private function getFlashMessengerPluginMock($successCount = 0, $errorCount = 0)
-    {
-        $flashMessengerMock = $this->getMockBuilder('Zend\Mvc\Controller\Plugin\FlashMessenger')
-            ->setMethods(['addSuccessMessage', 'addErrorMessage'])
-            ->getMock();
-
-        $flashMessengerMock->expects($this->exactly($successCount))->method('addSuccessMessage');
-        $flashMessengerMock->expects($this->exactly($errorCount))->method('addErrorMessage');
-
-        return $flashMessengerMock;
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    private function getResponseMock()
-    {
-        $responseMock = $this->getMockBuilder('Zend\Http\Response')
-            ->setMethods([])
-            ->getMock();
-
-        return $responseMock;
-    }
-
-    /**
-     * @param \PHPUnit_Framework_MockObject_MockObject
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    private function getRedirectPluginMock($responseMock)
-    {
-        $redirectMock = $this->getMockBuilder('Zend\Mvc\Controller\Plugin\Redirect')
-            ->setMethods(['toRoute'])
-            ->getMock();
-
-        $redirectMock->expects($this->once())->method('toRoute')->will($this->returnValue($responseMock));
-
-        return $redirectMock;
-    }
-
-    /**
-     * @param array $post
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    private function getRequestMock($post = null)
-    {
-        $requestMock = $this->getMockBuilder('Zend\Http\Request')
-            ->setMethods(['isPost', 'getPost'])
-            ->getMock();
-
-        $isPost = !is_null($post);
-
-        $requestMock->expects($this->once())->method('isPost')->will($this->returnValue($isPost));
-        $requestMock->expects($this->once())->method('getPost')->will($this->returnValue($post));
-
-        return $requestMock;
     }
 
     /**

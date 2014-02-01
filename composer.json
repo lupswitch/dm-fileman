@@ -9,16 +9,19 @@
         {
             "type": "vcs",
             "url": "https://github.com/DevMonkCom/dm-common"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/DevMonkCom/dm-test"
         }
     ],
     "require": {
         "php": ">=5.4",
         "ext-mbstring": "*",
-        "zendframework/zend-mvc": "2.2.*",
-        "zendframework/zend-cache": "2.2.*",
-        "zendframework/zend-http": "2.2.*",
+        "zendframework/zendframework": "2.2.*",
         "imagine/imagine": "0.6.*@dev",
-        "devmonk/dm-common": "dev-master"
+        "devmonk/dm-common": "dev-master",
+        "devmonk/dm-test": "dev-master"
     },
     "require-dev": {
         "mikey179/vfsStream": "1.2.*"
