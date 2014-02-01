@@ -2,7 +2,7 @@
 
 namespace DmFileman\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use DmCommon\Controller\TestableController;
 use Zend\View\Model\ViewModel;
 use DmFileman\Service\FileManager\FileManager;
 use DmFileman\Form\DeleteFileForm;
@@ -16,7 +16,7 @@ use DmFileman\Service\Thumbnailer\Thumbnailer;
  *
  * @method ViewModel layout(string $template = null)
  */
-class DeleteFileController extends AbstractActionController
+class DeleteFileController extends TestableController
 {
     use CurrentPathTrait;
 
