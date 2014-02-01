@@ -146,21 +146,10 @@ class UploadFileController extends TestableController
     private function resizeImage(array $fileData)
     {
         if (array_key_exists($fileData['type'], $this->mimeTypes)) {
-            $origName = $fileData['tmp_name'];
+            $fileManager = $this->getFileManager();
 
-            $origInfo = getimagesize($origName);
-
-            if (!$origInfo) {
-                return true;
-            }
-
-            $thumbName = str_replace(
-                $this->getFileManager()->getOrigDir(),
-                $this->getFileManager()->getThumbDir(),
-                $origName
-            );
-
-            $this->thumbnailer->resize($origName, $thumbName, $origInfo);
+            return $this->thumbnailer
+                ->resizeOrigImage($fileData['tmp_name'], $fileManager->getOrigDir(), $fileManager->getThumbDir());
         }
 
         return true;

@@ -53,6 +53,28 @@ class Thumbnailer
 
     /**
      * @param string $origName
+     * @param string $origDir
+     * @param string $thumbDir
+     *
+     * @return bool
+     */
+    public function resizeOrigImage($origName, $origDir, $thumbDir)
+    {
+        $origInfo = getimagesize($origName);
+
+        if (!$origInfo) {
+            return false;
+        }
+
+        $thumbName = str_replace($origDir, $thumbDir, $origName);
+
+        $this->resize($origName, $thumbName, $origInfo);
+
+        return true;
+    }
+
+    /**
+     * @param string $origName
      * @param string $thumbName
      * @param array  $origInfo
      */
