@@ -97,7 +97,7 @@ class UploadFile extends InputFilter
         }
 
         if (count($this->extensions)) {
-            $fileInput->getValidatorChain()->attachByName('extension', array('extension' => $this->extensions));
+            $fileInput->getValidatorChain()->attachByName('fileextension', array('extension' => $this->extensions));
         }
     }
 
