@@ -35,7 +35,9 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['getBox', 'getPoint'])
             ->getMock();
 
-        $this->root = vfs\vfsStream::setup('root');
+        $imageContent = file_get_contents(__DIR__ . '/fixtures/orig/white.gif');
+        $structure    = ['orig' => ['white.gif' => $imageContent], 'thumb' => ['white.gif' => '']];
+        $this->root = vfs\vfsStream::setup('root', 0777, $structure);
 
         $this->sut = new Thumbnailer($this->imagineMock, $this->factoryMock);
     }
@@ -244,5 +246,40 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->sut = new Thumbnailer($this->imagineMock, $this->factoryMock);
+    }
+
+    public function testResizeOrigImageReturnsFalseIfFileDoesNotExist()
+    {
+        $origName = 'asd';
+        $origDir  = vfs\vfsStream::url('root/orig');
+        $thumbDir = vfs\vfsStream::url('root/thumb');
+
+        $actualResult = $this->sut->resizeOrigImage($origName, $origDir, $thumbDir);
+
+        $this->assertFalse($actualResult);
+    }
+
+    public function testResizeOrigImageReturnsFalseIfGetimagesizeFails()
+    {
+        $origName = vfs\vfsStream::url('root/thumb/white.gif');
+        $origDir  = vfs\vfsStream::url('root/orig');
+        $thumbDir = vfs\vfsStream::url('root/thumb');
+
+        $actualResult = $this->sut->resizeOrigImage($origName, $origDir, $thumbDir);
+
+        $this->assertFalse($actualResult);
+    }
+
+    public function testResizeOrigImageReturnsTrueIfGetimagesizeIsSuccessful()
+    {
+        $origName = vfs\vfsStream::url('root/orig/white.gif');
+        $origDir  = vfs\vfsStream::url('root/orig');
+        $thumbDir = vfs\vfsStream::url('root/thumb');
+
+        $this->sut->setThumbConfig([Thumbnailer::CONFIG_WIDTH => 10000, Thumbnailer::CONFIG_HEIGHT => 10000]);
+
+        $actualResult = $this->sut->resizeOrigImage($origName, $origDir, $thumbDir);
+
+        $this->assertTrue($actualResult);
     }
 }

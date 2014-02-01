@@ -60,7 +60,12 @@ class Thumbnailer
      */
     public function resizeOrigImage($origName, $origDir, $thumbDir)
     {
-        $origInfo = getimagesize($origName);
+        if (!file_exists($origName)) {
+            return false;
+        }
+
+        // Getimagesize tends to throw errors not documented
+        $origInfo = @getimagesize($origName);
 
         if (!$origInfo) {
             return false;
