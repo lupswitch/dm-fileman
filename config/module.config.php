@@ -13,7 +13,7 @@ return array(
         ),
         'file_upload' => array(
             'max_size' => 20480000,
-            'extensions' => array('jpg', 'png', 'gif')
+            'extensions' => array('jpg', 'png', 'gif'),
         ),
     ),
     'guards' => array(
@@ -21,7 +21,7 @@ return array(
             'type' => 'Regexp',
             'options' => array(
                 'regexp' => '(/filemanager/?.*)',
-                'assertion' => 'RouteGuard\Assertion\Zf2Authentication\IsLoggedIn'
+                'assertion' => 'RouteGuard\Assertion\Zf2Authentication\IsLoggedIn',
             ),
         ),
     ),
@@ -93,6 +93,13 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+    ),
+    'asset_manager' => array(
+        'resolver_configs' => array(
+            'paths' => array(
+                __DIR__ . '/../public',
+            ),
         ),
     ),
 );
