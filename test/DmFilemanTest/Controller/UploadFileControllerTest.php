@@ -36,7 +36,7 @@ class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->thumbnailerMock = $this->getMockBuilder('DmFileman\Service\Thumbnailer\Thumbnailer')
-            ->setMethods(['resize'])
+            ->setMethods(['resizeOrigImage'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -191,6 +191,50 @@ class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getData')
             ->will($this->returnValue(['file' => ['type' => '']]));
+
+        $this->sut->setCurrentPath('');
+
+        $actualResult = $this->sut->uploadAction();
+
+        $this->assertEquals($responseMock, $actualResult);
+    }
+
+    /**
+     * @covers DmFileman\Controller\UploadFileController
+     */
+    public function testUploadActionCreatesThumbnail()
+    {
+        $responseMock = $this->getResponseMock();
+
+        $flashMessengerMock = $this->getFlashMessengerPluginMock(1, 0);
+        $redirectMock       = $this->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->getPluginMock($flashMessengerMock, $redirectMock);
+
+        $this->sut->setPluginManager($pluginMock);
+
+        $requestMock = $this->getRequestMock(new \SplFixedArray(0), new \SplFixedArray(0));
+        $this->sut->setRequest($requestMock);
+
+        $inputFilterMock = $this->getMock('Zend\InputFilter\InputFilter', ['init', 'setCurrentDir']);
+        $inputFilterMock->expects($this->any())->method('setCurrentDir')->will($this->returnSelf());
+
+        $this->uploadFileFormMock
+            ->expects($this->once())
+            ->method('getInputFilter')
+            ->will($this->returnValue($inputFilterMock));
+        $this->uploadFileFormMock
+            ->expects($this->once())
+            ->method('isValid')
+            ->will($this->returnValue(true));
+        $this->uploadFileFormMock
+            ->expects($this->once())
+            ->method('getData')
+            ->will($this->returnValue(['file' => ['type' => 'image/jpeg', 'tmp_name' => '']]));
+
+        $this->thumbnailerMock
+            ->expects($this->once())
+            ->method('resizeOrigImage')
+            ->will($this->returnValue(true));
 
         $this->sut->setCurrentPath('');
 
