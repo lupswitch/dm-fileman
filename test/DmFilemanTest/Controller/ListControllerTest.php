@@ -3,9 +3,12 @@
 namespace DmFilemanTest\Controller;
 
 use DmFileman\Controller\ListController;
+use DmTest\Controller\TestCaseTrait;
 
 class ListControllerTest extends \PHPUnit_Framework_TestCase
 {
+    use TestCaseTrait;
+
     /** @var ListController */
     protected $sut;
 
@@ -51,24 +54,48 @@ class ListControllerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers DmFileman\Controller\ListController
      */
-    public function testIndexAction()
+    public function testIndexActionRedirectsToListPage()
     {
-        $this->markTestIncomplete();
+        $responseMock = $this->getResponseMock();
+
+        $redirectMock       = $this->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->getPluginMock($redirectMock);
+
+        $this->sut->setPluginManager($pluginMock);
+
+        $actualResult = $this->sut->indexAction();
+
+        $this->assertEquals($responseMock, $actualResult);
     }
 
     /**
      * @covers DmFileman\Controller\ListController
      */
-    public function testListAction()
+    public function testListActionReturnsViewModel()
     {
-        $this->markTestIncomplete();
+        $this->fileManagerMock->expects($this->once())->method('getList');
+
+        $this->sut->setCurrentPath('');
+
+        $actualResult = $this->sut->listAction();
+
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $actualResult);
     }
 
     /**
      * @covers DmFileman\Controller\ListController
      */
-    public function testRefreshAction()
+    public function testRefreshActionRedirectsToListPage()
     {
-        $this->markTestIncomplete();
+        $responseMock = $this->getResponseMock();
+
+        $redirectMock = $this->getRedirectPluginMock($responseMock);
+        $pluginMock   = $this->getPluginMock($redirectMock);
+
+        $this->sut->setPluginManager($pluginMock);
+
+        $actualResult = $this->sut->refreshAction();
+
+        $this->assertEquals($responseMock, $actualResult);
     }
 }
