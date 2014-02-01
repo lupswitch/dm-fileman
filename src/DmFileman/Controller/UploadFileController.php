@@ -5,32 +5,24 @@ namespace DmFileman\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use DmFileman\Service\FileManager\FileManager;
-use DmFileman\Form\CreateDirectoryForm;
-use DmFileman\Form\DeleteFileForm;
 use DmFileman\Form\UploadFileForm;
 use DmFileman\View\Helper\UserText;
 use DmFileman\Service\Thumbnailer\Thumbnailer;
 
 /**
- * Class FileManagerController
+ * Class UploadFileController
  *
  * @package DmFileman\Controller
  *
  * @method ViewModel layout(string $template = null)
  */
-class FileManagerController extends AbstractActionController
+class UploadFileController extends AbstractActionController
 {
     /** @var FileManager */
     private $fileManager;
 
-    /** @var CreateDirectoryForm */
-    private $createDirForm;
-
     /** @var UploadFileForm */
     private $uploadFileForm;
-
-    /** @var DeleteFileForm */
-    private $deleteFileForm;
 
     /** @var Thumbnailer */
     private $thumbnailer;
@@ -49,27 +41,19 @@ class FileManagerController extends AbstractActionController
 
     /**
      * @param FileManager           $fileManager
-     * @param CreateDirectoryForm   $createDirectoryForm
      * @param UploadFileForm        $uploadFileForm
-     * @param DeleteFileForm        $deleteFileForm
      * @param Thumbnailer           $thumbnailer
      * @param UserText              $userText
      */
     public function __construct(
         FileManager $fileManager,
-        CreateDirectoryForm $createDirectoryForm,
         UploadFileForm $uploadFileForm,
-        DeleteFileForm $deleteFileForm,
         Thumbnailer $thumbnailer,
         UserText $userText
     ) {
         $this->fileManager = $fileManager;
 
-        $this->createDirForm = $createDirectoryForm;
-
         $this->uploadFileForm = $uploadFileForm;
-
-        $this->deleteFileForm = $deleteFileForm;
 
         $this->thumbnailer = $thumbnailer;
 
@@ -103,138 +87,9 @@ class FileManagerController extends AbstractActionController
     /**
      * @return string
      */
-    public function getOrigDir()
+    private function getOrigDir()
     {
         return $this->getFileManager()->getOrigDir($this->getCurrentPath());
-    }
-
-    /**
-     * @return \Zend\Http\Response
-     */
-    public function indexAction()
-    {
-        return $this->redirect()->toRoute('filemanager/list', array('dir' => '/'));
-    }
-
-    /**
-     * @return ViewModel
-     */
-    public function listAction()
-    {
-        $this->createDirForm->build();
-
-        $this->uploadFileForm->build();
-
-        $this->deleteFileForm->build();
-
-        $viewData = array(
-            'list'       => $this->getFileManager()->getList(),
-            'currentDir' => $this->getCurrentPath(),
-            'createForm' => $this->createDirForm,
-            'uploadForm' => $this->uploadFileForm,
-            'deleteForm' => $this->deleteFileForm,
-        );
-
-        $this->layout('layout/filemanager.phtml');
-
-        return new ViewModel($viewData);
-    }
-
-    /**
-     * @return \Zend\Http\Response
-     */
-    public function refreshAction()
-    {
-        $this->getFileManager()->refresh();
-
-        return $this->redirect()->toRoute('filemanager/list', array('dir' => $this->getCurrentPath()));
-    }
-
-    /**
-     * @return \Zend\Http\Response
-     */
-    public function createAction()
-    {
-        if ($this->handleCreatePost($this->createDirForm)) {
-            $this->flashMessenger()
-                ->addSuccessMessage($this->userText->getMessage(UserText::DIRECTORY, UserText::CREATE_SUCCESS));
-        } else {
-            $this->flashMessenger()
-                ->addErrorMessage($this->userText->getMessage(UserText::DIRECTORY, UserText::CREATE_FAILURE));
-        }
-
-        return $this->redirect()->toRoute('filemanager/list', array('dir' => $this->getCurrentPath()));
-    }
-
-    /**
-     * @param CreateDirectoryForm $form
-     *
-     * @return bool
-     */
-    private function handleCreatePost(CreateDirectoryForm $form)
-    {
-        /** @var \Zend\Http\Request $request */
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
-
-            $form->getInputFilter()->init();
-
-            if ($form->isValid()) {
-                return $this->getFileManager()->create($form->getData()['directoryName']);
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @return \Zend\Http\Response
-     */
-    public function updateAction()
-    {
-    }
-
-    /**
-     * @return \Zend\Http\Response
-     */
-    public function deleteAction()
-    {
-        $this->deleteFileForm->build();
-
-        if ($this->handleDeletePost($this->deleteFileForm)) {
-            $this->flashMessenger()
-                ->addSuccessMessage($this->userText->getMessage(UserText::FILE, UserText::DELETE_SUCCESS));
-        } else {
-            $this->flashMessenger()
-                ->addErrorMessage($this->userText->getMessage(UserText::FILE, UserText::DELETE_FAILURE));
-        }
-
-        return $this->redirect()->toRoute('filemanager/list', array('dir' => $this->getCurrentPath()));
-    }
-
-    /**
-     * @param DeleteFileForm $form
-     *
-     * @return bool
-     */
-    private function handleDeletePost(DeleteFileForm $form)
-    {
-        /** @var \Zend\Http\Request $request */
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
-
-            $form->getInputFilter()->init();
-
-            if ($form->isValid()) {
-                return $this->getFileManager()->delete($form->getData()['name']);
-            }
-        }
-
-        return false;
     }
 
     /**

@@ -2,11 +2,11 @@
 
 namespace DmFilemanTest\Controller;
 
-use DmFileman\Controller\FileManagerController;
+use DmFileman\Controller\CreateDirectoryController;
 
-class FileManagerControllerTest extends \PHPUnit_Framework_TestCase
+class CreateDirectoryControllerTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var FileManagerController */
+    /** @var CreateDirectoryController */
     protected $sut;
 
     /** @var \PHPUnit_Framework_MockObject_MockObject */
@@ -38,14 +38,6 @@ class FileManagerControllerTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['build', 'getInputFilter'])
             ->getMock();
 
-        $this->uploadFileFormMock = $this->getMockBuilder('DmFileman\Form\UploadFileForm')
-            ->setMethods(['build', 'getMessages', 'getInputFilter'])
-            ->getMock();
-
-        $this->deleteFileFormMock = $this->getMockBuilder('DmFileman\Form\DeleteFileForm')
-            ->setMethods(['build', 'getInputFilter'])
-            ->getMock();
-
         $this->thumbnailerMock = $this->getMockBuilder('DmFileman\Service\Thumbnailer\Thumbnailer')
             ->setMethods(['resize'])
             ->disableOriginalConstructor()
@@ -55,60 +47,18 @@ class FileManagerControllerTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['getMessage'])
             ->getMock();
 
-        $this->sut = new FileManagerController(
+        $this->sut = new CreateDirectoryController(
             $this->fileManagerMock,
             $this->createDirFormMock,
-            $this->uploadFileFormMock,
-            $this->deleteFileFormMock,
             $this->thumbnailerMock,
             $this->userTextMock
         );
     }
 
     /**
-     * @covers DmFileman\Controller\FileManagerController
-     */
-    public function testIndexAction()
-    {
-        $this->markTestIncomplete();
-    }
-
-    /**
-     * @covers DmFileman\Controller\FileManagerController
-     */
-    public function testListAction()
-    {
-        $this->markTestIncomplete();
-    }
-
-    /**
-     * @covers DmFileman\Controller\FileManagerController
-     */
-    public function testRefreshAction()
-    {
-        $this->markTestIncomplete();
-    }
-
-    /**
-     * @covers DmFileman\Controller\FileManagerController
+     * @covers DmFileman\Controller\CreateDirectoryController
      */
     public function testCreateAction()
-    {
-        $this->markTestIncomplete();
-    }
-
-    /**
-     * @covers DmFileman\Controller\FileManagerController
-     */
-    public function testDeleteAction()
-    {
-        $this->markTestIncomplete();
-    }
-
-    /**
-     * @covers DmFileman\Controller\FileManagerController
-     */
-    public function testUploadAction()
     {
         $this->markTestIncomplete();
     }

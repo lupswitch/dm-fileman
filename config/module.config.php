@@ -32,7 +32,7 @@ return array(
                 'options' => array(
                     'route' => '/filemanager',
                     'defaults' => array(
-                        'controller' => 'DmFileman\Controller\FileManagerController',
+                        'controller' => 'DmFileman\Controller\ListController',
                         'action' => 'index',
                     ),
                 ),
@@ -61,6 +61,7 @@ return array(
                         'options' => array(
                             'route' => '/create/:dir',
                             'defaults' => array(
+                                'controller' => 'DmFileman\Controller\CreateDirectoryController',
                                 'action' => 'create',
                             ),
                         ),
@@ -70,6 +71,7 @@ return array(
                         'options' => array(
                             'route' => '/delete/:dir',
                             'defaults' => array(
+                                'controller' => 'DmFileman\Controller\DeleteFileController',
                                 'action' => 'delete',
                             ),
                         ),
@@ -79,6 +81,7 @@ return array(
                         'options' => array(
                             'route' => '/upload/:dir',
                             'defaults' => array(
+                                'controller' => 'DmFileman\Controller\UploadFileController',
                                 'action' => 'upload',
                             ),
                         ),

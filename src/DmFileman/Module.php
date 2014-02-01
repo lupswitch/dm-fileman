@@ -96,18 +96,16 @@ class Module
     {
         return array(
             'factories' => array(
-                'DmFileman\Controller\FileManagerController'  => function (ControllerManager $controllerManager) {
+                'DmFileman\Controller\ListController'  => function (ControllerManager $controllerManager) {
                     /** @var ServiceManager $serviceManager */
                     $serviceManager = $controllerManager->getServiceLocator();
 
-                    $fileManager = $serviceManager->get('DmFileman\Service\FileManager');
-                    $createFileForm = new Form\CreateDirectoryForm();
+                    $fileManager    = $serviceManager->get('DmFileman\Service\FileManager');
+                    $createDirForm  = new Form\CreateDirectoryForm();
                     $uploadFileForm = new Form\UploadFileForm();
                     $deleteFileForm = new Form\DeleteFileForm();
-                    $thumbsConfig = $serviceManager->get('DmFileman\Service\Thumbnailer');
-                    $userText = new View\Helper\UserText();
 
-                    $createFileForm->setInputFilter(new InputFilter\CreateDirectory());
+                    $createDirForm->setInputFilter(new InputFilter\CreateDirectory());
                     /** @var InputFilter\UploadFile $inputFileFilter */
                     $inputFileFilter = $serviceManager->get('DmFileman\InputFilter\UploadFile');
                     $uploadFileForm->setInputFilter($inputFileFilter);
@@ -117,11 +115,75 @@ class Module
                     $uploadFileFilter = $uploadFileForm->getInputFilter();
                     $uploadFileFilter->setFileInput(new \Zend\InputFilter\FileInput());
 
-                    $controller = new Controller\FileManagerController(
+                    $controller = new Controller\ListController(
                         $fileManager,
-                        $createFileForm,
+                        $createDirForm,
                         $uploadFileForm,
+                        $deleteFileForm
+                    );
+
+                    return $controller;
+                },
+                'DmFileman\Controller\DeleteFileController'  => function (ControllerManager $controllerManager) {
+                    /** @var ServiceManager $serviceManager */
+                    $serviceManager = $controllerManager->getServiceLocator();
+
+                    $fileManager    = $serviceManager->get('DmFileman\Service\FileManager');
+                    $deleteFileForm = new Form\DeleteFileForm();
+                    $thumbsConfig   = $serviceManager->get('DmFileman\Service\Thumbnailer');
+                    $userText       = new View\Helper\UserText();
+
+                    $deleteFileForm->setInputFilter(new InputFilter\DeleteFile());
+
+                    $controller = new Controller\DeleteFileController(
+                        $fileManager,
                         $deleteFileForm,
+                        $thumbsConfig,
+                        $userText
+                    );
+
+                    return $controller;
+                },
+                'DmFileman\Controller\UploadFileController'  => function (ControllerManager $controllerManager) {
+                    /** @var ServiceManager $serviceManager */
+                    $serviceManager = $controllerManager->getServiceLocator();
+
+                    $fileManager    = $serviceManager->get('DmFileman\Service\FileManager');
+                    $uploadFileForm = new Form\UploadFileForm();
+                    $thumbsConfig   = $serviceManager->get('DmFileman\Service\Thumbnailer');
+                    $userText       = new View\Helper\UserText();
+
+                    /** @var InputFilter\UploadFile $inputFileFilter */
+                    $inputFileFilter = $serviceManager->get('DmFileman\InputFilter\UploadFile');
+                    $uploadFileForm->setInputFilter($inputFileFilter);
+
+                    /** @var InputFilter\UploadFile $uploadFileFilter */
+                    $uploadFileFilter = $uploadFileForm->getInputFilter();
+                    $uploadFileFilter->setFileInput(new \Zend\InputFilter\FileInput());
+
+                    $controller = new Controller\UploadFileController(
+                        $fileManager,
+                        $uploadFileForm,
+                        $thumbsConfig,
+                        $userText
+                    );
+
+                    return $controller;
+                },
+                'DmFileman\Controller\CreateDirectoryController'  => function (ControllerManager $controllerManager) {
+                    /** @var ServiceManager $serviceManager */
+                    $serviceManager = $controllerManager->getServiceLocator();
+
+                    $fileManager   = $serviceManager->get('DmFileman\Service\FileManager');
+                    $createDirForm = new Form\CreateDirectoryForm();
+                    $thumbsConfig  = $serviceManager->get('DmFileman\Service\Thumbnailer');
+                    $userText      = new View\Helper\UserText();
+
+                    $createDirForm->setInputFilter(new InputFilter\CreateDirectory());
+
+                    $controller = new Controller\CreateDirectoryController(
+                        $fileManager,
+                        $createDirForm,
                         $thumbsConfig,
                         $userText
                     );
