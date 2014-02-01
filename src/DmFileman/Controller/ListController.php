@@ -18,6 +18,8 @@ use DmFileman\Form\UploadFileForm;
  */
 class ListController extends AbstractActionController
 {
+    use CurrentPathTrait;
+
     /** @var FileManager */
     private $fileManager;
 
@@ -64,26 +66,6 @@ class ListController extends AbstractActionController
         }
 
         return $this->fileManager;
-    }
-
-    /**
-     * @return string
-     */
-    private function getCurrentPath()
-    {
-        $currentPath = $this->params('dir');
-
-        $currentPath = $currentPath ? urldecode($currentPath) : '/';
-
-        return $currentPath;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOrigDir()
-    {
-        return $this->getFileManager()->getOrigDir($this->getCurrentPath());
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace DmFileman\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use DmCommon\Controller\TestableController;
 use Zend\View\Model\ViewModel;
 use DmFileman\Service\FileManager\FileManager;
 use DmFileman\Form\CreateDirectoryForm;
@@ -16,8 +16,10 @@ use DmFileman\Service\Thumbnailer\Thumbnailer;
  *
  * @method ViewModel layout(string $template = null)
  */
-class CreateDirectoryController extends AbstractActionController
+class CreateDirectoryController extends TestableController
 {
+    use CurrentPathTrait;
+
     /** @var FileManager */
     private $fileManager;
 
@@ -64,18 +66,6 @@ class CreateDirectoryController extends AbstractActionController
         }
 
         return $this->fileManager;
-    }
-
-    /**
-     * @return string
-     */
-    private function getCurrentPath()
-    {
-        $currentPath = $this->params('dir');
-
-        $currentPath = $currentPath ? urldecode($currentPath) : '/';
-
-        return $currentPath;
     }
 
     /**

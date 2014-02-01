@@ -18,6 +18,8 @@ use DmFileman\Service\Thumbnailer\Thumbnailer;
  */
 class DeleteFileController extends AbstractActionController
 {
+    use CurrentPathTrait;
+
     /** @var FileManager */
     private $fileManager;
 
@@ -64,26 +66,6 @@ class DeleteFileController extends AbstractActionController
         }
 
         return $this->fileManager;
-    }
-
-    /**
-     * @return string
-     */
-    private function getCurrentPath()
-    {
-        $currentPath = $this->params('dir');
-
-        $currentPath = $currentPath ? urldecode($currentPath) : '/';
-
-        return $currentPath;
-    }
-
-    /**
-     * @return string
-     */
-    private function getOrigDir()
-    {
-        return $this->getFileManager()->getOrigDir($this->getCurrentPath());
     }
 
     /**

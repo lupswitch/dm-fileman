@@ -18,6 +18,8 @@ use DmFileman\Service\Thumbnailer\Thumbnailer;
  */
 class UploadFileController extends AbstractActionController
 {
+    use CurrentPathTrait;
+
     /** @var FileManager */
     private $fileManager;
 
@@ -70,18 +72,6 @@ class UploadFileController extends AbstractActionController
         }
 
         return $this->fileManager;
-    }
-
-    /**
-     * @return string
-     */
-    private function getCurrentPath()
-    {
-        $currentPath = $this->params('dir');
-
-        $currentPath = $currentPath ? urldecode($currentPath) : '/';
-
-        return $currentPath;
     }
 
     /**
