@@ -238,7 +238,7 @@ class FileInfo
             ->getThumbnailPath(
                 $this->splFileInfo,
                 $this->getPathname(),
-                $this->displayName,
+                $this->getDisplayName(),
                 $this->thumbBasePath,
                 $this->relativePath
             );
@@ -253,7 +253,7 @@ class FileInfo
             ->getImageThumbnailPath(
                 $this->splFileInfo,
                 $this->getPathname(),
-                $this->displayName,
+                $this->getDisplayName(),
                 $this->thumbBasePath,
                 $this->relativePath
             );
