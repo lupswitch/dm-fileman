@@ -2,8 +2,9 @@
 
 namespace DmFileman\Controller;
 
+use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use DmCommon\Controller\TestableController;
+use DmCommon\Controller\TestableControllerTrait;
 use DmCommon\DefinedConstant\Message;
 use DmCommon\View\Helper\UserText;
 use DmFileman\Service\FileManager\FileManager;
@@ -18,9 +19,10 @@ use DmFileman\DefinedConstant\EntityName;
  *
  * @method ViewModel layout(string $template = null)
  */
-class UploadFileController extends TestableController
+class UploadFileController extends AbstractActionController
 {
     use CurrentPathTrait;
+    use TestableControllerTrait;
 
     /** @var FileManager */
     private $fileManager;
