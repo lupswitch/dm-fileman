@@ -40,7 +40,7 @@ class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->userTextMock = $this->getMockBuilder('DmFileman\View\Helper\UserText')
+        $this->userTextMock = $this->getMockBuilder('DmCommon\View\Helper\UserText')
             ->setMethods(['getMessage'])
             ->getMock();
 

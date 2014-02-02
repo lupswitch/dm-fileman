@@ -40,6 +40,16 @@ class Module
     {
         return array(
             'factories'  => array(
+                'DmFileman\View\Helper\UserText' => function () {
+                    $userText = new \DmCommon\View\Helper\UserText;
+
+                    $userText->addActions(\DmCommon\DefinedConstant\Action::getMessages());
+                    $userText->addMessages(\DmCommon\DefinedConstant\Message::getMessages());
+                    $userText->addMessages(\DmFileman\DefinedConstant\Message::getMessages());
+                    $userText->addEntityNames(\DmFileman\DefinedConstant\EntityName::getMessages());
+
+                    return $userText;
+                },
                 'DmFileman\Helper\Options' => function (ServiceManager $serviceManager) {
                     $options = $serviceManager->get('config');
 
@@ -131,7 +141,7 @@ class Module
                     $fileManager    = $serviceManager->get('DmFileman\Service\FileManager');
                     $deleteFileForm = new Form\DeleteFileForm();
                     $thumbsConfig   = $serviceManager->get('DmFileman\Service\Thumbnailer');
-                    $userText       = new View\Helper\UserText();
+                    $userText       = $serviceManager->get('DmFileman\View\Helper\UserText');
 
                     $deleteFileForm->setInputFilter(new InputFilter\DeleteFile());
 
@@ -151,7 +161,7 @@ class Module
                     $fileManager    = $serviceManager->get('DmFileman\Service\FileManager');
                     $uploadFileForm = new Form\UploadFileForm();
                     $thumbsConfig   = $serviceManager->get('DmFileman\Service\Thumbnailer');
-                    $userText       = new View\Helper\UserText();
+                    $userText       = $serviceManager->get('DmFileman\View\Helper\UserText');
 
                     /** @var InputFilter\UploadFile $inputFileFilter */
                     $inputFileFilter = $serviceManager->get('DmFileman\InputFilter\UploadFile');
@@ -177,7 +187,7 @@ class Module
                     $fileManager   = $serviceManager->get('DmFileman\Service\FileManager');
                     $createDirForm = new Form\CreateDirectoryForm();
                     $thumbsConfig  = $serviceManager->get('DmFileman\Service\Thumbnailer');
-                    $userText      = new View\Helper\UserText();
+                    $userText       = $serviceManager->get('DmFileman\View\Helper\UserText');
 
                     $createDirForm->setInputFilter(new InputFilter\CreateDirectory());
 

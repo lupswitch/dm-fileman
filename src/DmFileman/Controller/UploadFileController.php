@@ -2,12 +2,14 @@
 
 namespace DmFileman\Controller;
 
-use DmCommon\Controller\TestableController;
 use Zend\View\Model\ViewModel;
+use DmCommon\Controller\TestableController;
+use DmCommon\DefinedConstant\Message;
+use DmCommon\View\Helper\UserText;
 use DmFileman\Service\FileManager\FileManager;
 use DmFileman\Form\UploadFileForm;
-use DmFileman\View\Helper\UserText;
 use DmFileman\Service\Thumbnailer\Thumbnailer;
+use DmFileman\DefinedConstant\EntityName;
 
 /**
  * Class UploadFileController
@@ -91,10 +93,10 @@ class UploadFileController extends TestableController
 
         if ($this->handleUploadPost($this->uploadFileForm)) {
             $this->flashMessenger()
-                ->addSuccessMessage($this->userText->getMessage(UserText::FILE, UserText::UPLOAD_SUCCESS));
+                ->addSuccessMessage($this->userText->getMessage(EntityName::FILE, Message::UPLOAD_SUCCESS));
         } else {
             $this->flashMessenger()
-                ->addErrorMessage($this->userText->getMessage(UserText::FILE, UserText::UPLOAD_FAILURE));
+                ->addErrorMessage($this->userText->getMessage(EntityName::FILE, Message::UPLOAD_FAILURE));
 
             foreach ($this->uploadFileForm->getMessages() as $messages) {
                 foreach ($messages as $message) {

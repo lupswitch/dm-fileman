@@ -2,12 +2,14 @@
 
 namespace DmFileman\Controller;
 
-use DmCommon\Controller\TestableController;
 use Zend\View\Model\ViewModel;
+use DmCommon\Controller\TestableController;
+use DmCommon\DefinedConstant\Message;
+use DmCommon\View\Helper\UserText;
 use DmFileman\Service\FileManager\FileManager;
 use DmFileman\Form\DeleteFileForm;
-use DmFileman\View\Helper\UserText;
 use DmFileman\Service\Thumbnailer\Thumbnailer;
+use DmFileman\DefinedConstant\EntityName;
 
 /**
  * Class DeleteFileController
@@ -77,10 +79,10 @@ class DeleteFileController extends TestableController
 
         if ($this->handleDeletePost($this->deleteFileForm)) {
             $this->flashMessenger()
-                ->addSuccessMessage($this->userText->getMessage(UserText::FILE, UserText::DELETE_SUCCESS));
+                ->addSuccessMessage($this->userText->getMessage(EntityName::FILE, Message::DELETE_SUCCESS));
         } else {
             $this->flashMessenger()
-                ->addErrorMessage($this->userText->getMessage(UserText::FILE, UserText::DELETE_FAILURE));
+                ->addErrorMessage($this->userText->getMessage(EntityName::FILE, Message::DELETE_FAILURE));
         }
 
         return $this->redirect()->toRoute('filemanager/list', array('dir' => $this->getCurrentPath()));

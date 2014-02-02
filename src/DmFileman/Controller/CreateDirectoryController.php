@@ -2,12 +2,14 @@
 
 namespace DmFileman\Controller;
 
-use DmCommon\Controller\TestableController;
 use Zend\View\Model\ViewModel;
+use DmCommon\Controller\TestableController;
+use DmCommon\View\Helper\UserText;
+use DmCommon\DefinedConstant\Message;
 use DmFileman\Service\FileManager\FileManager;
 use DmFileman\Form\CreateDirectoryForm;
-use DmFileman\View\Helper\UserText;
 use DmFileman\Service\Thumbnailer\Thumbnailer;
+use DmFileman\DefinedConstant\EntityName;
 
 /**
  * Class CreateDirectoryController
@@ -75,10 +77,10 @@ class CreateDirectoryController extends TestableController
     {
         if ($this->handleCreatePost($this->createDirForm)) {
             $this->flashMessenger()
-                ->addSuccessMessage($this->userText->getMessage(UserText::DIRECTORY, UserText::CREATE_SUCCESS));
+                ->addSuccessMessage($this->userText->getMessage(EntityName::DIRECTORY, Message::CREATE_SUCCESS));
         } else {
             $this->flashMessenger()
-                ->addErrorMessage($this->userText->getMessage(UserText::DIRECTORY, UserText::CREATE_FAILURE));
+                ->addErrorMessage($this->userText->getMessage(EntityName::DIRECTORY, Message::CREATE_FAILURE));
         }
 
         return $this->redirect()->toRoute('filemanager/list', array('dir' => $this->getCurrentPath()));
