@@ -8,11 +8,11 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/DevMonkCom/dm-common"
+            "url": "https://github.com/peteraba/dm-common"
         },
         {
             "type": "vcs",
-            "url": "https://github.com/DevMonkCom/dm-test"
+            "url": "https://github.com/peteraba/dm-test"
         }
     ],
     "require": {
