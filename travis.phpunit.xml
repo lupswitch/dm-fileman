@@ -5,7 +5,6 @@
         backupStaticAttributes="false"
         cacheTokens="false"
         verbose="false"
-        colors="true"
         bootstrap="./test/init.php">
     <testsuites>
         <testsuite name="DmFilemanTest">
