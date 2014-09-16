@@ -10,17 +10,9 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
     /** @var Formatter */
     protected $sut;
 
-    /** @var PHPUnit_Framework_MockObject_MockObject */
-    protected $splFileInfoMock;
-
     protected function setUp()
     {
         $this->sut = new Formatter();
-
-        $this->splFileInfoMock = $this->getMockBuilder('SplFileInfo')
-            ->setMethods(['getSize', 'getPerms', 'getOwner', 'getGroup'])
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 
     /**
@@ -34,25 +26,31 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers DmFileman\Helper\FileInfo\Formatter
+     * @covers   DmFileman\Helper\FileInfo\Formatter
+     * @requires PHP 5.6
      */
     public function testFormatSizeReturnsZeroOnZeroSizedSplInfo()
     {
-        $this->splFileInfoMock->expects($this->any())->method('getSize')->will($this->returnValue(0));
+        $splFileInfoMock = $this->getSplFileInfoMock();
+        
+        $splFileInfoMock->expects($this->any())->method('getSize')->will($this->returnValue(0));
 
-        $actualResult = $this->sut->formatSize($this->splFileInfoMock);
+        $actualResult = $this->sut->formatSize($splFileInfoMock);
 
         $this->assertEquals(0, $actualResult);
     }
 
     /**
      * @covers DmFileman\Helper\FileInfo\Formatter
+     * @requires PHP 5.6
      */
     public function testFormatSizeReturnsFileSizeIfRawIsGiven()
     {
-        $this->splFileInfoMock->expects($this->any())->method('getSize')->will($this->returnValue(100));
+        $splFileInfoMock = $this->getSplFileInfoMock();
+        
+        $splFileInfoMock->expects($this->any())->method('getSize')->will($this->returnValue(100));
 
-        $actualResult = $this->sut->formatSize($this->splFileInfoMock, true);
+        $actualResult = $this->sut->formatSize($splFileInfoMock, true);
 
         $this->assertEquals(100, $actualResult);
     }
@@ -75,6 +73,7 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider formatSizeProvider
      * @covers DmFileman\Helper\FileInfo\Formatter
+     * @requires PHP 5.6
      *
      * @param int         $size
      * @param string      $expectedResult
@@ -87,23 +86,28 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
             $this->sut = new Formatter($decPoint, $thousandsSep);
         }
 
-        $this->splFileInfoMock->expects($this->any())->method('getSize')->will($this->returnValue($size));
+        $splFileInfoMock = $this->getSplFileInfoMock();
 
-        $actualResult = $this->sut->formatSize($this->splFileInfoMock);
+        $splFileInfoMock->expects($this->any())->method('getSize')->will($this->returnValue($size));
+
+        $actualResult = $this->sut->formatSize($splFileInfoMock);
 
         $this->assertEquals($expectedResult, $actualResult);
     }
 
     /**
      * @covers DmFileman\Helper\FileInfo\Formatter
+     * @requires PHP 5.6
      */
     public function testFormatSizeReturnsRawIfUnitIsNotSet()
     {
         $size = pow(10, 20);
 
-        $this->splFileInfoMock->expects($this->any())->method('getSize')->will($this->returnValue($size));
+        $splFileInfoMock = $this->getSplFileInfoMock();
 
-        $actualResult = $this->sut->formatSize($this->splFileInfoMock);
+        $splFileInfoMock->expects($this->any())->method('getSize')->will($this->returnValue($size));
+
+        $actualResult = $this->sut->formatSize($splFileInfoMock);
 
         $this->assertEquals($size, $actualResult);
     }
@@ -120,12 +124,15 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Formatter
+     * @requires PHP 5.6
      */
     public function testFormatPermissions()
     {
-        $this->splFileInfoMock->expects($this->any())->method('getPerms')->will($this->returnValue(33188));
+        $splFileInfoMock = $this->getSplFileInfoMock();
+        
+        $splFileInfoMock->expects($this->any())->method('getPerms')->will($this->returnValue(33188));
 
-        $actualResult = $this->sut->formatPermissions($this->splFileInfoMock);
+        $actualResult = $this->sut->formatPermissions($splFileInfoMock);
 
         $this->assertEquals('0644', $actualResult);
     }
@@ -142,14 +149,17 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Formatter
+     * @requires PHP 5.6
      */
     public function testFormatOwner()
     {
         $userId = posix_geteuid();
 
-        $this->splFileInfoMock->expects($this->any())->method('getOwner')->will($this->returnValue($userId));
+        $splFileInfoMock = $this->getSplFileInfoMock();
 
-        $actualResult = $this->sut->formatOwner($this->splFileInfoMock);
+        $splFileInfoMock->expects($this->any())->method('getOwner')->will($this->returnValue($userId));
+
+        $actualResult = $this->sut->formatOwner($splFileInfoMock);
 
         $this->assertEquals(posix_getpwuid($userId)['name'], $actualResult);
     }
@@ -166,15 +176,29 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Formatter
+     * @requires PHP 5.6
      */
     public function testFormatGroup()
     {
         $groupId = posix_getegid();
+        
+        $splFileInfoMock = $this->getSplFileInfoMock();
 
-        $this->splFileInfoMock->expects($this->any())->method('getGroup')->will($this->returnValue($groupId));
+        $splFileInfoMock->expects($this->any())->method('getGroup')->will($this->returnValue($groupId));
 
-        $actualResult = $this->sut->formatGroup($this->splFileInfoMock);
+        $actualResult = $this->sut->formatGroup($splFileInfoMock);
 
         $this->assertEquals(posix_getpwuid($groupId)['name'], $actualResult);
+    }
+
+    /**
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getSplFileInfoMock()
+    {
+        return $this->getMockBuilder('SplFileInfo')
+            ->setMethods(['getSize', 'getPerms', 'getOwner', 'getGroup'])
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 }

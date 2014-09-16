@@ -45,6 +45,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Path
+     * @requires PHP 5.6
      */
     public function testGetRelativePathReturnsGivenPathIfWithFilenameIsFalse()
     {
@@ -59,6 +60,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Path
+     * @requires PHP 5.6
      */
     public function testGetRelativePathReturnsGivenPathIfWithFilenameIsDisabled()
     {
@@ -73,6 +75,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Path
+     * @requires PHP 5.6
      */
     public function testGetRelativePathReturnsGivenPathWithAppendedFileName()
     {
@@ -91,6 +94,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Path
+     * @requires PHP 5.6
      */
     public function testGetRelativePathReturnsGivenPathWithAppendedFileNameAndSlashForDirectories()
     {
@@ -119,6 +123,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Path
+     * @requires PHP 5.6
      */
     public function testGetThumbnailPathTriesToGetImageThumbnailPathForImages()
     {
@@ -143,6 +148,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Path
+     * @requires PHP 5.6
      */
     public function testGetThumbnailPathReturnsDirectoryThumbnailForDirectories()
     {
@@ -158,6 +164,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Path
+     * @requires PHP 5.6
      */
     public function testGetThumbnailPathGetsTypeThumbnailPathIfNoSpecialImagePathWasFound()
     {
@@ -192,6 +199,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Path
+     * @requires PHP 5.6
      */
     public function testGetExtensionReturnsExtensionAndPrependsPrepend()
     {
@@ -215,6 +223,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Path
+     * @requires PHP 5.6
      */
     public function testGetImageThumbnailPathReturnsEmptyStringIfThumbnailIsNotFound()
     {
@@ -235,6 +244,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Path
+     * @requires PHP 5.6
      */
     public function testGetImageThumbnailPath()
     {
@@ -265,6 +275,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Path
+     * @requires PHP 5.6
      */
     public function testGetTypeThumbnailPathReturnsDirectoryIconForDirectories()
     {
@@ -279,6 +290,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Path
+     * @requires PHP 5.6
      */
     public function testGetTypeThumbnailPathReturnsFileIconOnUnknownExtension()
     {
@@ -294,6 +306,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers DmFileman\Helper\FileInfo\Path
+     * @requires PHP 5.6
      */
     public function testGetTypeThumbnailPathReturnsExtensionIconWhenFound()
     {
