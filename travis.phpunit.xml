@@ -2,7 +2,7 @@
 
 <phpunit
         cacheTokens="false"
-        verbose="false"
+        verbose="true"
         bootstrap="./test/init.php">
     <testsuites>
         <testsuite name="DmFilemanTest">
