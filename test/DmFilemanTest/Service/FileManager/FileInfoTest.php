@@ -55,8 +55,10 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
     private function getSplFileInfoMock()
     {
         $splFileInfoMock = $this->getMockBuilder('SplFileInfo')
-            ->disableOriginalConstructor()
             ->setMethods(['getATime', 'getCTime', 'getMTime', 'getFilename', 'isFile', 'isDir'])
+            ->disableOriginalConstructor()
+            ->disableOriginalClone()
+            ->disableAutoload()
             ->getMock();
 
         return $splFileInfoMock;
