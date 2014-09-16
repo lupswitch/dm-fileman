@@ -91,7 +91,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
      */
     private function getSplFileInfo()
     {
-        $splFileInfoMock = $this->getMockBuilder('SplFileInfo')
+        $splFileInfoMock = $this->getMockBuilder('\SplFileInfo')
             ->setMethods([])
             ->disableOriginalConstructor()
             ->disableOriginalClone()
