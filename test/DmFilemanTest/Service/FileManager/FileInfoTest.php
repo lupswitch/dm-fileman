@@ -3,6 +3,7 @@
 namespace DmFilemanTest\Service\FileManager;
 
 use DmFileman\Service\FileManager\FileInfo;
+use org\bovigo\vfs;
 
 class FileInfoTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,8 +25,17 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $pathMock;
 
+    /** @var \org\bovigo\vfs\vfsStreamDirectory */
+    private $uploadDir;
+
+    /** @var string */
+    private $baseDir;
+
     public function setUp()
     {
+        $this->uploadDir = vfs\vfsStream::setup('upload', 0777, []);
+        $this->baseDir   = vfs\vfsStream::url('upload');
+
         $this->formatterMock = $this->getMockBuilder('DmFileman\Helper\FileInfo\Formatter')
             ->disableOriginalConstructor()
             ->setMethods(['formatSize', 'formatPermissions', 'formatOwner', 'formatGroup'])
@@ -54,14 +64,7 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
 
     private function getSplFileInfoMock()
     {
-        $splFileInfoMock = $this->getMockBuilder('\SplFileInfo')
-            ->setMethods(['getATime', 'getCTime', 'getMTime', 'getFilename', 'isFile', 'isDir'])
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->disableAutoload()
-            ->getMock();
-
-        return $splFileInfoMock;
+        return new \SplFileInfo($this->baseDir);
     }
 
     public function testGetSizeCallsFormatterHelper()
@@ -131,18 +134,14 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAccessedAtCallsSplFileInfo()
     {
-        $expectedResult = 654;
-
         $splFileInfo = $this->getSplFileInfoMock();
-        $splFileInfo
-            ->expects($this->once())
-            ->method('getATime')
-            ->will($this->returnValue($expectedResult));
+
         $this->sut->setSplFileInfo($splFileInfo);
 
         $actualResult = $this->sut->getAccessedAt();
 
-        $this->assertEquals($expectedResult, $actualResult);
+        $this->assertLessThanOrEqual(time(), $actualResult);
+        $this->assertGreaterThanOrEqual(time()-10, $actualResult);
     }
 
     public function testGetCreatedAtReturnsEmptyStringWhenSplFileInfoIsNotSet()
@@ -156,43 +155,33 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCreatedAtCallsSplFileInfo()
     {
-        $expectedResult = 654;
-
         $splFileInfo = $this->getSplFileInfoMock();
-        $splFileInfo
-            ->expects($this->once())
-            ->method('getCTime')
-            ->will($this->returnValue($expectedResult));
+
         $this->sut->setSplFileInfo($splFileInfo);
 
         $actualResult = $this->sut->getCreatedAt();
 
-        $this->assertEquals($expectedResult, $actualResult);
+        $this->assertLessThanOrEqual(time(), $actualResult);
+        $this->assertGreaterThanOrEqual(time()-10, $actualResult);
     }
 
     public function testGetModifiedAtReturnsEmptyStringWhenSplFileInfoIsNotSet()
     {
-        $expectedResult = '';
-
         $actualResult = $this->sut->getModifiedAt();
 
-        $this->assertEquals($expectedResult, $actualResult);
+        $this->assertSame('', $actualResult);
     }
 
     public function testGetModifiedAtCallsSplFileInfo()
     {
-        $expectedResult = 654;
-
         $splFileInfo = $this->getSplFileInfoMock();
-        $splFileInfo
-            ->expects($this->once())
-            ->method('getMTime')
-            ->will($this->returnValue($expectedResult));
+
         $this->sut->setSplFileInfo($splFileInfo);
 
         $actualResult = $this->sut->getModifiedAt();
 
-        $this->assertEquals($expectedResult, $actualResult);
+        $this->assertLessThanOrEqual(time(), $actualResult);
+        $this->assertGreaterThanOrEqual(time()-10, $actualResult);
     }
 
     public function testGetExtensionCallsPathHelper()
@@ -228,11 +217,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDisplayNameCallsSplFileInfoIfDisplayNameIsNotSet()
     {
-        $expectedResult = 'foo';
+        $expectedResult = 'upload';
 
         $splFileInfoMock = $this->getSplFileInfoMock();
-
-        $splFileInfoMock->expects($this->once())->method('getFilename')->will($this->returnValue($expectedResult));
 
         $this->sut->setSplFileInfo($splFileInfoMock);
 

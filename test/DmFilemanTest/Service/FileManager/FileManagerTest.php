@@ -13,6 +13,9 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $factory;
 
+    /** @var \org\bovigo\vfs\vfsStreamDirectory */
+    private $uploadDir;
+
     /** @var string */
     private $baseDir;
 
@@ -91,12 +94,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
      */
     private function getSplFileInfo()
     {
-        $splFileInfoMock = $this->getMockBuilder('\SplFileInfo')
-            ->setMethods([])
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->disableAutoload()
-            ->getMock();
+        $splFileInfoMock = new \SplFileInfo($this->baseDir);
 
         return $splFileInfoMock;
     }
