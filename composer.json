@@ -1,6 +1,6 @@
 {
     "name": "peteraba/dm-fileman",
-    "description": "File manager mainly for zf2-mailer / tinymce integration",
+    "description": "File manager mainly for dermailer / tinymce integration",
     "license": "BSD-3-Clause",
     "keywords": [
         "zf2"
