@@ -1,7 +1,7 @@
 dm-fileman
 ==========
 
-File manager mainly for zf2-mailer / tinymce integration
+File manager integrated into tinymce for the dermailer project
 
 [![Build Status](https://travis-ci.org/peteraba/dm-fileman.png?branch=master)](https://travis-ci.org/peteraba/dm-fileman)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/peteraba/dm-fileman/badges/quality-score.png?s=3acc7e34385eb052db23fca2c3fd37a6dc0af7fd)](https://scrutinizer-ci.com/g/peteraba/dm-fileman/)
