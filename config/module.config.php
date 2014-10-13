@@ -1,105 +1,105 @@
 <?php
 
-return array(
-    'dm-fileman' => array(
-        'filemanager' => array(
-            'namespace'    => 'dm-fileman',
-            'upload_dir'   => './public/upload',
-            'upload_path'  => '/upload',
-        ),
-        'thumbs' => array(
+return [
+    'dm-fileman'    => [
+        'filemanager' => [
+            'namespace'   => 'dm-fileman',
+            'upload_dir'  => './public/upload',
+            'upload_path' => '/upload',
+        ],
+        'thumbs'      => [
             'width'  => 128,
             'height' => 128,
-        ),
-        'file_upload' => array(
-            'max_size' => 20480000,
-            'extensions' => array('jpg', 'png', 'gif'),
-        ),
-    ),
-    'guards' => array(
-        array(
-            'type' => 'Regexp',
-            'options' => array(
-                'regexp' => '(/filemanager/?.*)',
+        ],
+        'file_upload' => [
+            'max_size'   => 20480000,
+            'extensions' => ['jpg', 'png', 'gif'],
+        ],
+    ],
+    'guards'        => [
+        [
+            'type'    => 'Regexp',
+            'options' => [
+                'regexp'    => '(/filemanager/?.*)',
                 'assertion' => 'RouteGuard\Assertion\Zf2Authentication\IsLoggedIn',
-            ),
-        ),
-    ),
-    'router' => array(
-        'routes' => array(
-            'filemanager' => array(
-                'type' => 'literal',
-                'options' => array(
-                    'route' => '/filemanager',
-                    'defaults' => array(
+            ],
+        ],
+    ],
+    'router'        => [
+        'routes' => [
+            'filemanager' => [
+                'type'          => 'literal',
+                'options'       => [
+                    'route'    => '/filemanager',
+                    'defaults' => [
                         'controller' => 'DmFileman\Controller\ListController',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action'     => 'index',
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'list' => array(
-                        'type' => 'segment',
-                        'options' => array(
-                            'route' => '/list/:dir',
-                            'defaults' => array(
+                'child_routes'  => [
+                    'list'    => [
+                        'type'    => 'segment',
+                        'options' => [
+                            'route'    => '/list/:dir',
+                            'defaults' => [
                                 'action' => 'list',
-                            ),
-                        ),
-                    ),
-                    'refresh' => array(
-                        'type' => 'segment',
-                        'options' => array(
-                            'route' => '/refresh/:dir',
-                            'defaults' => array(
+                            ],
+                        ],
+                    ],
+                    'refresh' => [
+                        'type'    => 'segment',
+                        'options' => [
+                            'route'    => '/refresh/:dir',
+                            'defaults' => [
                                 'action' => 'refresh',
-                            ),
-                        ),
-                    ),
-                    'create' => array(
-                        'type' => 'segment',
-                        'options' => array(
-                            'route' => '/create/:dir',
-                            'defaults' => array(
+                            ],
+                        ],
+                    ],
+                    'create'  => [
+                        'type'    => 'segment',
+                        'options' => [
+                            'route'    => '/create/:dir',
+                            'defaults' => [
                                 'controller' => 'DmFileman\Controller\CreateDirectoryController',
-                                'action' => 'create',
-                            ),
-                        ),
-                    ),
-                    'delete' => array(
-                        'type' => 'segment',
-                        'options' => array(
-                            'route' => '/delete/:dir',
-                            'defaults' => array(
+                                'action'     => 'create',
+                            ],
+                        ],
+                    ],
+                    'delete'  => [
+                        'type'    => 'segment',
+                        'options' => [
+                            'route'    => '/delete/:dir',
+                            'defaults' => [
                                 'controller' => 'DmFileman\Controller\DeleteFileController',
-                                'action' => 'delete',
-                            ),
-                        ),
-                    ),
-                    'upload' => array(
-                        'type' => 'segment',
-                        'options' => array(
-                            'route' => '/upload/:dir',
-                            'defaults' => array(
+                                'action'     => 'delete',
+                            ],
+                        ],
+                    ],
+                    'upload'  => [
+                        'type'    => 'segment',
+                        'options' => [
+                            'route'    => '/upload/:dir',
+                            'defaults' => [
                                 'controller' => 'DmFileman\Controller\UploadFileController',
-                                'action' => 'upload',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-    ),
-    'view_manager' => array(
-        'template_path_stack' => array(
+                                'action'     => 'upload',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'view_manager'  => [
+        'template_path_stack' => [
             __DIR__ . '/../view',
-        ),
-    ),
-    'asset_manager' => array(
-        'resolver_configs' => array(
-            'paths' => array(
+        ],
+    ],
+    'asset_manager' => [
+        'resolver_configs' => [
+            'paths' => [
                 __DIR__ . '/../public',
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];
