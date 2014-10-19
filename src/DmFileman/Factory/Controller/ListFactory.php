@@ -3,6 +3,7 @@
 namespace DmFileman\Factory\Controller;
 
 use Zend\InputFilter\FileInput;
+use Zend\Mvc\Controller\ControllerManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -24,6 +25,10 @@ class ListFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        if ($serviceLocator instanceof ControllerManager) {
+            $serviceLocator = $serviceLocator->getServiceLocator();
+        }
+
         /** @var FileManagerService $fileManager */
         $fileManager    = $serviceLocator->get('DmFileman\Service\FileManager');
         $createDirForm  = new CreateDirectoryForm();

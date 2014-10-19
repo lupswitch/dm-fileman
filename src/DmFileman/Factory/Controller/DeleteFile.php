@@ -2,6 +2,7 @@
 
 namespace DmFileman\Factory\Controller;
 
+use Zend\Mvc\Controller\ControllerManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -21,6 +22,10 @@ class DeleteFile implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        if ($serviceLocator instanceof ControllerManager) {
+            $serviceLocator = $serviceLocator->getServiceLocator();
+        }
+
         /** @var FileManagerService $fileManager */
         $fileManager = $serviceLocator->get('DmFileman\Service\FileManager');
 

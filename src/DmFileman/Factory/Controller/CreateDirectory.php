@@ -2,6 +2,7 @@
 
 namespace DmFileman\Factory\Controller;
 
+use Zend\Mvc\Controller\ControllerManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -22,6 +23,10 @@ class CreateDirectory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        if ($serviceLocator instanceof ControllerManager) {
+            $serviceLocator = $serviceLocator->getServiceLocator();
+        }
+
         $createDirForm = new CreateDirectoryForm();
 
         /** @var FileManagerService $fileManager */
