@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'dm-fileman'    => [
+    'dm-fileman'      => [
         'filemanager' => [
             'namespace'   => 'dm-fileman',
             'upload_dir'  => './public/upload',
@@ -16,7 +16,7 @@ return [
             'extensions' => ['jpg', 'png', 'gif'],
         ],
     ],
-    'guards'        => [
+    'guards'          => [
         [
             'type'    => 'Regexp',
             'options' => [
@@ -25,7 +25,7 @@ return [
             ],
         ],
     ],
-    'router'        => [
+    'router'          => [
         'routes' => [
             'filemanager' => [
                 'type'          => 'literal',
@@ -90,16 +90,33 @@ return [
             ],
         ],
     ],
-    'view_manager'  => [
+    'view_manager'    => [
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
     ],
-    'asset_manager' => [
+    'asset_manager'   => [
         'resolver_configs' => [
             'paths' => [
                 __DIR__ . '/../public',
             ],
         ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            'DmFileman\View\Helper\UserText'   => 'DmFileman\Factory\View\Helper\UserText',
+            'DmFileman\Helper\Options'         => 'DmFileman\Factory\Helper\Options',
+            'DmFileman\InputFilter\UploadFile' => 'DmFileman\Factory\InputFilter\UploadFile',
+            'DmFileman\Service\FileManager'    => 'DmFileman\Factory\Service\FileManager',
+            'DmFileman\Service\Thumbnailer'    => 'DmFileman\Factory\Service\Thumbnailer',
+        ]
+    ],
+    'controllers'     => [
+        'factories' => [
+            'DmFileman\Controller\ListController'            => 'DmFileman\Factory\Controller\ListFactory',
+            'DmFileman\Controller\DeleteFileController'      => 'DmFileman\Factory\Controller\DeleteFile',
+            'DmFileman\Controller\UploadFileController'      => 'DmFileman\Factory\Controller\UploadFile',
+            'DmFileman\Controller\CreateDirectoryController' => 'DmFileman\Factory\Controller\CreateDirectory',
+        ]
     ],
 ];
