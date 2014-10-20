@@ -20,30 +20,30 @@ class CreateDirectoryForm extends BaseForm
         $this->setAttribute('role', 'form');
 
         $this->add(
-            array(
-                'name' => 'directoryName',
-                'type' => 'text',
-                'options' => array(
+            [
+                'name'    => 'directoryName',
+                'type'    => 'text',
+                'options' => [
                     'label' => 'Directory Name',
-                ),
-            )
+                ],
+            ]
         );
 
         $this->add(
-            array(
+            [
                 'name' => 'security',
                 'type' => 'csrf',
-            )
+            ]
         );
 
         $this->add(
-            array(
-                'name' => 'submit',
-                'type' => 'submit',
-                'attributes' => array(
+            [
+                'name'       => 'submit',
+                'type'       => 'submit',
+                'attributes' => [
                     'value' => 'Create Directory',
-                ),
-            )
+                ],
+            ]
         );
     }
 }

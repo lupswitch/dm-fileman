@@ -20,7 +20,7 @@ class Thumbnailer
     protected $factory;
 
     /** @var array */
-    protected $thumbConfig = array();
+    protected $thumbConfig = [];
 
     /**
      * @param ImageInterface $imagine
@@ -29,7 +29,7 @@ class Thumbnailer
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($imagine, Factory $factory, array $thumbConfig = array())
+    public function __construct($imagine, Factory $factory, array $thumbConfig = [])
     {
         if ($imagine instanceof ImagineGd || $imagine instanceof ImagineGmagick || $imagine instanceof ImagineImagick) {
             $this->imagine = $imagine;
@@ -46,7 +46,7 @@ class Thumbnailer
     /**
      * @param array $thumbConfig
      */
-    public function setThumbConfig(array $thumbConfig = array())
+    public function setThumbConfig(array $thumbConfig = [])
     {
         $this->thumbConfig = $thumbConfig;
     }
@@ -129,15 +129,15 @@ class Thumbnailer
      */
     protected function getResizeParameters(array $origInfo)
     {
-        $widthRatio = $origInfo[0] / $this->thumbConfig[static::CONFIG_WIDTH];
+        $widthRatio  = $origInfo[0] / $this->thumbConfig[static::CONFIG_WIDTH];
         $heightRatio = $origInfo[1] / $this->thumbConfig[static::CONFIG_HEIGHT];
 
         $realRatio = min($widthRatio, $heightRatio);
 
-        $resizeWidth = ceil($origInfo[0] / $realRatio);
+        $resizeWidth  = ceil($origInfo[0] / $realRatio);
         $resizeHeight = ceil($origInfo[1] / $realRatio);
 
-        return array($resizeWidth, $resizeHeight, $realRatio);
+        return [$resizeWidth, $resizeHeight, $realRatio];
     }
 
     /**
@@ -150,6 +150,6 @@ class Thumbnailer
         $cropX = floor(($resizeParameters[0] - $this->thumbConfig[static::CONFIG_WIDTH]) / 2);
         $cropY = floor(($resizeParameters[1] - $this->thumbConfig[static::CONFIG_HEIGHT]) / 2);
 
-        return array($cropX, $cropY);
+        return [$cropX, $cropY];
     }
 }

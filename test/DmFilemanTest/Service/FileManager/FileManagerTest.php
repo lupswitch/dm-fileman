@@ -25,15 +25,15 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $structure = [
-            'orig' => [
+            'orig'  => [
                 'img.jpg' => 'abcd',
-                'old' => [
+                'old'     => [
                     'img.jpg' => 'cdab'
                 ],
             ],
             'thumb' => [
                 'img.jpg' => 'bcde',
-                'old' => [
+                'old'     => [
                     'img.jpg' => 'cdab'
                 ],
             ]
@@ -156,7 +156,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetListReturnsListWithRealFiles()
     {
-        $fileInfoMock = $this->getFileInfo();
+        $fileInfoMock    = $this->getFileInfo();
         $splFileInfoMock = $this->getSplFileInfo();
 
         $this->factory

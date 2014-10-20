@@ -278,7 +278,7 @@ class FileInfo
     {
         if ($this->splFileInfo) {
             if (method_exists($this->splFileInfo, $method)) {
-                return call_user_func_array(array($this->splFileInfo, $method), $args);
+                return call_user_func_array([$this->splFileInfo, $method], $args);
             }
         }
 

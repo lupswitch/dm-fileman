@@ -44,7 +44,7 @@ class Options extends DmCommonOptions
     {
         return isset($this->options['dm-fileman']['file_upload']['extensions'])
             ? $this->options['dm-fileman']['file_upload']['extensions']
-            : array();
+            : [];
     }
 
     /**

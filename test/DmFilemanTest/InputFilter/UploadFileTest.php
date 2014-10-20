@@ -50,14 +50,13 @@ class UploadFileTest extends \PHPUnit_Framework_TestCase
     public function inputDataProvider()
     {
         return array_merge(
-            //$this->fileDataProvider(),
             $this->securityDataProvider(),
             []
         );
     }
 
     /**
-     * @covers \DmFileman\InputFilter\UploadFile
+     * @covers       \DmFileman\InputFilter\UploadFile
      * @dataProvider inputDataProvider
      *
      * @param mixed  $nameData
@@ -100,11 +99,11 @@ class UploadFileTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['attachByName'])
             ->disableOriginalConstructor()
             ->getMock();
-        $filterChainMock = $this->getMockBuilder('Zend\Filter\FilterChain')
+        $filterChainMock    = $this->getMockBuilder('Zend\Filter\FilterChain')
             ->setMethods(['attachByName'])
             ->disableOriginalConstructor()
             ->getMock();
-        $fileInputMock = $this->getMockBuilder('Zend\InputFilter\FileInput')
+        $fileInputMock      = $this->getMockBuilder('Zend\InputFilter\FileInput')
             ->setMethods(['getValidatorChain', 'getFilterChain'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -141,11 +140,11 @@ class UploadFileTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['attachByName'])
             ->disableOriginalConstructor()
             ->getMock();
-        $filterChainMock = $this->getMockBuilder('Zend\Filter\FilterChain')
+        $filterChainMock    = $this->getMockBuilder('Zend\Filter\FilterChain')
             ->setMethods(['attachByName'])
             ->disableOriginalConstructor()
             ->getMock();
-        $fileInputMock = $this->getMockBuilder('Zend\InputFilter\FileInput')
+        $fileInputMock      = $this->getMockBuilder('Zend\InputFilter\FileInput')
             ->setMethods(['getValidatorChain', 'getFilterChain', 'setName', 'setRequired'])
             ->disableOriginalConstructor()
             ->getMock();

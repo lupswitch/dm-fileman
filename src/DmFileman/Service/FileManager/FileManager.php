@@ -25,8 +25,8 @@ class FileManager
     protected $factory;
 
     /**
-     * @param Factory          $factory
-     * @param array            $config
+     * @param Factory $factory
+     * @param array   $config
      */
     public function __construct(Factory $factory, $config)
     {
@@ -96,7 +96,7 @@ class FileManager
         $origPath = $this->getOrigDir($currentDir);
 
         /** @var FileInfo[] $list */
-        $list = array();
+        $list = [];
 
         if (!empty($currentDir) && $currentDir != '/') {
             $upOneDir = rtrim(dirname($currentDir), '/') . '/';
@@ -139,7 +139,7 @@ class FileManager
         }
 
         // Tweak for first level one-up
-        if ($dir=='/') {
+        if ($dir == '/') {
             $fileInfo->disableWithFilename();
         }
 
@@ -206,7 +206,7 @@ class FileManager
      */
     public function deleteTree($dir)
     {
-        $files = array_diff(scandir($dir), array('.','..'));
+        $files = array_diff(scandir($dir), ['.', '..']);
 
         foreach ($files as $file) {
             if (is_dir("$dir/$file")) {

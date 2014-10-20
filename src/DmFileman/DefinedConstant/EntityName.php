@@ -7,20 +7,20 @@ use DmCommon\View\Helper\UserText;
 
 class EntityName implements ConstantProviderInterface
 {
-    const DIRECTORY  = 'directory';
-    const FILE       = 'file';
+    const DIRECTORY = 'directory';
+    const FILE      = 'file';
 
     /** @var array */
-    protected static $messages = array(
-        UserText::SINGULAR => array(
+    protected static $messages = [
+        UserText::SINGULAR => [
             self::DIRECTORY => 'Directory',
             self::FILE      => 'File',
-        ),
-        UserText::PLURAL => array(
+        ],
+        UserText::PLURAL   => [
             self::DIRECTORY => 'Directories',
             self::FILE      => 'Files',
-        ),
-    );
+        ],
+    ];
 
     /**
      * @return array

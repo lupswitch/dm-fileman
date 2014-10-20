@@ -37,19 +37,19 @@ class UploadFileController extends AbstractActionController
     private $initialized = false;
 
     /** @var array */
-    private $mimeTypes = array(
+    private $mimeTypes = [
         'image/jpeg' => 'jpg',
-        'image/png' => 'png',
-    );
+        'image/png'  => 'png',
+    ];
 
     /** @var UserText */
     private $userText;
 
     /**
-     * @param FileManager           $fileManager
-     * @param UploadFileForm        $uploadFileForm
-     * @param Thumbnailer           $thumbnailer
-     * @param UserText              $userText
+     * @param FileManager    $fileManager
+     * @param UploadFileForm $uploadFileForm
+     * @param Thumbnailer    $thumbnailer
+     * @param UserText       $userText
      */
     public function __construct(
         FileManager $fileManager,
@@ -108,7 +108,7 @@ class UploadFileController extends AbstractActionController
             }
         }
 
-        return $this->redirect()->toRoute('filemanager/list', array('dir' => $this->getCurrentPath()));
+        return $this->redirect()->toRoute('filemanager/list', ['dir' => $this->getCurrentPath()]);
     }
 
     /**

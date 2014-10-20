@@ -21,30 +21,30 @@ class DeleteFileForm extends BaseForm
         $this->setAttribute('role', 'form');
 
         $this->add(
-            array(
-                'name' => 'name',
-                'type' => 'text',
-                'options' => array(
+            [
+                'name'    => 'name',
+                'type'    => 'text',
+                'options' => [
                     'label' => 'File Name',
-                ),
-            )
+                ],
+            ]
         );
 
         $this->add(
-            array(
+            [
                 'name' => 'security',
                 'type' => 'csrf',
-            )
+            ]
         );
 
         $this->add(
-            array(
-                'name' => 'submit',
-                'type' => 'submit',
-                'attributes' => array(
+            [
+                'name'       => 'submit',
+                'type'       => 'submit',
+                'attributes' => [
                     'value' => 'Delete File',
-                ),
-            )
+                ],
+            ]
         );
     }
 }

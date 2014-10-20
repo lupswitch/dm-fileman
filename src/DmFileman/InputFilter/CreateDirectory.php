@@ -9,30 +9,30 @@ class CreateDirectory extends InputFilter
     public function init()
     {
         $this->add(
-            array(
+            [
                 'name'       => 'directoryName',
                 'required'   => true,
-                'filters'    => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
+                'filters'    => [
+                    ['name' => 'StripTags'],
+                    ['name' => 'StringTrim'],
+                ],
+                'validators' => [
+                    [
                         'name'    => 'StringLength',
-                        'options' => array(
+                        'options' => [
                             'encoding' => 'UTF-8',
                             'min'      => 1,
                             'max'      => 160,
-                        ),
-                    ),
-                ),
-            )
+                        ],
+                    ],
+                ],
+            ]
         );
 
         $this->add(
-            array(
-                'name'       => 'security',
-                'required'   => true,
+            [
+                'name'     => 'security',
+                'required' => true,
                 /* csrf is autoadded
                 'validators' => array(
                     array(
@@ -41,7 +41,7 @@ class CreateDirectory extends InputFilter
                         ),
                     ),
                 ),*/
-            )
+            ]
         );
     }
 }

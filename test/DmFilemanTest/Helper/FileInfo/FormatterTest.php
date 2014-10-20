@@ -32,7 +32,7 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
     public function testFormatSizeReturnsZeroOnZeroSizedSplInfo()
     {
         $splFileInfoMock = $this->getSplFileInfoMock();
-        
+
         $splFileInfoMock->expects($this->any())->method('getSize')->will($this->returnValue(0));
 
         $actualResult = $this->sut->formatSize($splFileInfoMock);
@@ -41,13 +41,13 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers DmFileman\Helper\FileInfo\Formatter
+     * @covers   DmFileman\Helper\FileInfo\Formatter
      * @requires PHP 5.6
      */
     public function testFormatSizeReturnsFileSizeIfRawIsGiven()
     {
         $splFileInfoMock = $this->getSplFileInfoMock();
-        
+
         $splFileInfoMock->expects($this->any())->method('getSize')->will($this->returnValue(100));
 
         $actualResult = $this->sut->formatSize($splFileInfoMock, true);
@@ -72,8 +72,8 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider formatSizeProvider
-     * @covers DmFileman\Helper\FileInfo\Formatter
-     * @requires PHP 5.6
+     * @covers       DmFileman\Helper\FileInfo\Formatter
+     * @requires     PHP 5.6
      *
      * @param int         $size
      * @param string      $expectedResult
@@ -96,7 +96,7 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers DmFileman\Helper\FileInfo\Formatter
+     * @covers   DmFileman\Helper\FileInfo\Formatter
      * @requires PHP 5.6
      */
     public function testFormatSizeReturnsRawIfUnitIsNotSet()
@@ -123,13 +123,13 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers DmFileman\Helper\FileInfo\Formatter
+     * @covers   DmFileman\Helper\FileInfo\Formatter
      * @requires PHP 5.6
      */
     public function testFormatPermissions()
     {
         $splFileInfoMock = $this->getSplFileInfoMock();
-        
+
         $splFileInfoMock->expects($this->any())->method('getPerms')->will($this->returnValue(33188));
 
         $actualResult = $this->sut->formatPermissions($splFileInfoMock);
@@ -148,7 +148,7 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers DmFileman\Helper\FileInfo\Formatter
+     * @covers   DmFileman\Helper\FileInfo\Formatter
      * @requires PHP 5.6
      */
     public function testFormatOwner()
@@ -175,13 +175,13 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers DmFileman\Helper\FileInfo\Formatter
+     * @covers   DmFileman\Helper\FileInfo\Formatter
      * @requires PHP 5.6
      */
     public function testFormatGroup()
     {
         $groupId = posix_getegid();
-        
+
         $splFileInfoMock = $this->getSplFileInfoMock();
 
         $splFileInfoMock->expects($this->any())->method('getGroup')->will($this->returnValue($groupId));

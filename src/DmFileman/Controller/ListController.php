@@ -36,10 +36,10 @@ class ListController extends AbstractActionController
     private $initialized = false;
 
     /**
-     * @param FileManager           $fileManager
-     * @param CreateDirectoryForm   $createDirectoryForm
-     * @param UploadFileForm        $uploadFileForm
-     * @param DeleteFileForm        $deleteFileForm
+     * @param FileManager         $fileManager
+     * @param CreateDirectoryForm $createDirectoryForm
+     * @param UploadFileForm      $uploadFileForm
+     * @param DeleteFileForm      $deleteFileForm
      */
     public function __construct(
         FileManager $fileManager,
@@ -73,7 +73,7 @@ class ListController extends AbstractActionController
      */
     public function indexAction()
     {
-        return $this->redirect()->toRoute('filemanager/list', array('dir' => '/'));
+        return $this->redirect()->toRoute('filemanager/list', ['dir' => '/']);
     }
 
     /**
@@ -87,13 +87,13 @@ class ListController extends AbstractActionController
 
         $this->deleteFileForm->build();
 
-        $viewData = array(
+        $viewData = [
             'list'       => $this->getFileManager()->getList(),
             'currentDir' => $this->getCurrentPath(),
             'createForm' => $this->createDirForm,
             'uploadForm' => $this->uploadFileForm,
             'deleteForm' => $this->deleteFileForm,
-        );
+        ];
 
         $this->layout('layout/filemanager.phtml');
 
@@ -105,6 +105,6 @@ class ListController extends AbstractActionController
      */
     public function refreshAction()
     {
-        return $this->redirect()->toRoute('filemanager/list', array('dir' => $this->getCurrentPath()));
+        return $this->redirect()->toRoute('filemanager/list', ['dir' => $this->getCurrentPath()]);
     }
 }

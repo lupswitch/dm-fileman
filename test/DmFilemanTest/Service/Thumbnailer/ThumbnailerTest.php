@@ -37,7 +37,7 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
 
         $imageContent = file_get_contents(__DIR__ . '/fixtures/orig/white.gif');
         $structure    = ['orig' => ['white.gif' => $imageContent], 'thumb' => ['white.gif' => '']];
-        $this->root = vfs\vfsStream::setup('root', 0777, $structure);
+        $this->root   = vfs\vfsStream::setup('root', 0777, $structure);
 
         $this->sut = new Thumbnailer($this->imagineMock, $this->factoryMock);
     }
@@ -96,7 +96,7 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
                 'orig1',
                 'thumb1',
                 [
-                    Thumbnailer::CONFIG_WIDTH => 100,
+                    Thumbnailer::CONFIG_WIDTH  => 100,
                     Thumbnailer::CONFIG_HEIGHT => 100
                 ],
                 [
@@ -121,7 +121,7 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
                 'orig1',
                 'thumb1',
                 [
-                    Thumbnailer::CONFIG_WIDTH => 100,
+                    Thumbnailer::CONFIG_WIDTH  => 100,
                     Thumbnailer::CONFIG_HEIGHT => 100
                 ],
                 [
@@ -142,7 +142,7 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
                 'orig1',
                 'thumb1',
                 [
-                    Thumbnailer::CONFIG_WIDTH => 100,
+                    Thumbnailer::CONFIG_WIDTH  => 100,
                     Thumbnailer::CONFIG_HEIGHT => 100
                 ],
                 [
@@ -162,7 +162,7 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \DmFileman\Service\Thumbnailer\Thumbnailer
+     * @covers       \DmFileman\Service\Thumbnailer\Thumbnailer
      * @dataProvider getResizeProvider
      *
      * @param string $origName

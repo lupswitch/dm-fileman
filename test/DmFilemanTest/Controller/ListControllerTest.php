@@ -58,8 +58,8 @@ class ListControllerTest extends \PHPUnit_Framework_TestCase
     {
         $responseMock = $this->getResponseMock();
 
-        $redirectMock       = $this->getRedirectPluginMock($responseMock);
-        $pluginMock         = $this->getPluginMock($redirectMock);
+        $redirectMock = $this->getRedirectPluginMock($responseMock);
+        $pluginMock   = $this->getPluginMock($redirectMock);
 
         $this->sut->setPluginManager($pluginMock);
 

@@ -13,13 +13,13 @@ class Message implements ConstantProviderInterface
     const DELETE_FORBIDDEN = 'delete_forbidden';
 
     /** @var array */
-    protected static $messages = array(
+    protected static $messages = [
         'upload_success'   => 'Uploading %s was successful.',
         'upload_failure'   => 'Uploading %s failed.',
         'delete_success'   => 'Deleting %s was successful.',
         'delete_failure'   => 'Deleting %s failed.',
         'delete_forbidden' => 'Deleting %s is not allowed.',
-    );
+    ];
 
     /**
      * @return array

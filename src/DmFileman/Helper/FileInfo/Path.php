@@ -7,33 +7,33 @@ use SplFileInfo;
 class Path
 {
     /** @var array */
-    protected $imageExtensions = array('png', 'jpg', 'jpeg', 'gif');
+    protected $imageExtensions = ['png', 'jpg', 'jpeg', 'gif'];
 
     /** @var string */
     protected $fileTypeBasePath = '/img/filemanager/';
 
-    protected $thumbsByType = array(
-        'compressed.png'  => array('zip', 'rar', '7z', 'gz', 'cab'),
-        'css.png'         => array('css'),
-        'developer.png'   => array(
+    protected $thumbsByType = [
+        'compressed.png'  => ['zip', 'rar', '7z', 'gz', 'cab'],
+        'css.png'         => ['css'],
+        'developer.png'   => [
             'c', 'd', 'e', 'f', 'go',
             'h', 'hpp', 'java', 'lisp', 'm',
             'php', 'php4', 'php5', 'phtml', 'pl',
             'pm', 'prg', 'py', 'r', 'rb',
             'vb', 'bat', 'coffee', 'erb', 'js',
             'lua', 'pl', 'sh',
-        ),
-        'excel.png'       => array('xls'),
-        'fileicon_bg.png' => array('exe'),
-        'fireworks.png'   => array(),
-        'flash.png'       => array('swf', 'flv', 'fla'),
-        'folder.png'      => array(),
-        'html.png'        => array('htm', 'html'),
-        'illustrator.png' => array('ai'),
-        'image.png'       => array('jpg', 'tif', 'bmp', 'gif', 'png', 'jpeg', 'ico', 'svg'),
-        'keynote.png'     => array(),
-        'movie.png'       => array('wmv', 'avi', 'mpg', 'mov', 'mp4', 'm4b', 'divx', 'm4v'),
-        'music.png'       => array(
+        ],
+        'excel.png'       => ['xls'],
+        'fileicon_bg.png' => ['exe'],
+        'fireworks.png'   => [],
+        'flash.png'       => ['swf', 'flv', 'fla'],
+        'folder.png'      => [],
+        'html.png'        => ['htm', 'html'],
+        'illustrator.png' => ['ai'],
+        'image.png'       => ['jpg', 'tif', 'bmp', 'gif', 'png', 'jpeg', 'ico', 'svg'],
+        'keynote.png'     => [],
+        'movie.png'       => ['wmv', 'avi', 'mpg', 'mov', 'mp4', 'm4b', 'divx', 'm4v'],
+        'music.png'       => [
             'mp3', 'wav', 'wma', 'rmvb', 'aif',
             'm4a', 'mid', 'ogg', 'ram', 'mp2',
             'flac', 'tta', 'la', 'ape', 'rka',
@@ -44,15 +44,15 @@ class Path
             'cwp', 'drm', 'mmr', 'npr', 'omfi',
             'ses', 'sfl', 'sng', 'stf', 'snd',
             'syn', 'flp'
-        ),
-        'numbers.png'     => array('mml', 'odf', 'sxm'),
-        'pages.png'       => array(),
-        'pdf.png'         => array('pdf'),
-        'photoshop.png'   => array('psd'),
-        'powerpoint.png'  => array('ppt', 'pps'),
-        'text.png'        => array('txt', 'log'),
-        'word.png'        => array('doc', 'rtf'),
-    );
+        ],
+        'numbers.png'     => ['mml', 'odf', 'sxm'],
+        'pages.png'       => [],
+        'pdf.png'         => ['pdf'],
+        'photoshop.png'   => ['psd'],
+        'powerpoint.png'  => ['ppt', 'pps'],
+        'text.png'        => ['txt', 'log'],
+        'word.png'        => ['doc', 'rtf'],
+    ];
 
     /**
      * @param bool             $withFilename

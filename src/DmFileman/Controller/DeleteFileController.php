@@ -40,10 +40,10 @@ class DeleteFileController extends AbstractActionController
     private $userText;
 
     /**
-     * @param FileManager           $fileManager
-     * @param DeleteFileForm        $deleteFileForm
-     * @param Thumbnailer           $thumbnailer
-     * @param UserText              $userText
+     * @param FileManager    $fileManager
+     * @param DeleteFileForm $deleteFileForm
+     * @param Thumbnailer    $thumbnailer
+     * @param UserText       $userText
      */
     public function __construct(
         FileManager $fileManager,
@@ -87,7 +87,7 @@ class DeleteFileController extends AbstractActionController
                 ->addErrorMessage($this->userText->getMessage(EntityName::FILE, Message::DELETE_FAILURE));
         }
 
-        return $this->redirect()->toRoute('filemanager/list', array('dir' => $this->getCurrentPath()));
+        return $this->redirect()->toRoute('filemanager/list', ['dir' => $this->getCurrentPath()]);
     }
 
     /**

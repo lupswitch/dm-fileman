@@ -7,7 +7,7 @@ use SplFileInfo;
 class Formatter
 {
     /** @var array */
-    protected $sizeUnits = array('B', 'KB', 'MB', 'GB');
+    protected $sizeUnits = ['B', 'KB', 'MB', 'GB'];
 
     /** @var string */
     protected $decPoint = '.';

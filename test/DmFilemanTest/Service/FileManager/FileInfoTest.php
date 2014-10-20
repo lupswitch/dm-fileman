@@ -41,7 +41,7 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['formatSize', 'formatPermissions', 'formatOwner', 'formatGroup'])
             ->getMock();
 
-        $pathMethods = [
+        $pathMethods    = [
             'getExtension',
             'getRelativePath',
             'getThumbnailPath',
@@ -141,7 +141,7 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $actualResult = $this->sut->getAccessedAt();
 
         $this->assertLessThanOrEqual(time(), $actualResult);
-        $this->assertGreaterThanOrEqual(time()-10, $actualResult);
+        $this->assertGreaterThanOrEqual(time() - 10, $actualResult);
     }
 
     public function testGetCreatedAtReturnsEmptyStringWhenSplFileInfoIsNotSet()
@@ -162,7 +162,7 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $actualResult = $this->sut->getCreatedAt();
 
         $this->assertLessThanOrEqual(time(), $actualResult);
-        $this->assertGreaterThanOrEqual(time()-10, $actualResult);
+        $this->assertGreaterThanOrEqual(time() - 10, $actualResult);
     }
 
     public function testGetModifiedAtReturnsEmptyStringWhenSplFileInfoIsNotSet()
@@ -181,7 +181,7 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $actualResult = $this->sut->getModifiedAt();
 
         $this->assertLessThanOrEqual(time(), $actualResult);
-        $this->assertGreaterThanOrEqual(time()-10, $actualResult);
+        $this->assertGreaterThanOrEqual(time() - 10, $actualResult);
     }
 
     public function testGetExtensionCallsPathHelper()

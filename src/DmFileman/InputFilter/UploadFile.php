@@ -17,7 +17,7 @@ class UploadFile extends InputFilter
     protected $maxSize = 0;
 
     /** @var array|string */
-    protected $extensions = array();
+    protected $extensions = [];
 
     /**
      * @param $currentDir
@@ -80,10 +80,10 @@ class UploadFile extends InputFilter
         $this->add($fileInput);
 
         $this->add(
-            array(
-                'name'       => 'security',
-                'required'   => true,
-            )
+            [
+                'name'     => 'security',
+                'required' => true,
+            ]
         );
     }
 
@@ -93,11 +93,11 @@ class UploadFile extends InputFilter
     private function addFileValidation(FileInput $fileInput)
     {
         if ($this->maxSize) {
-            $fileInput->getValidatorChain()->attachByName('filesize', array('max' => $this->maxSize));
+            $fileInput->getValidatorChain()->attachByName('filesize', ['max' => $this->maxSize]);
         }
 
         if (count($this->extensions)) {
-            $fileInput->getValidatorChain()->attachByName('fileextension', array('extension' => $this->extensions));
+            $fileInput->getValidatorChain()->attachByName('fileextension', ['extension' => $this->extensions]);
         }
     }
 
@@ -109,13 +109,13 @@ class UploadFile extends InputFilter
         if (null !== $this->currentDir) {
             $fileInput->getFilterChain()->attachByName(
                 'filerenameupload',
-                array(
+                [
                     'target'               => $this->currentDir,
                     'overwrite'            => true,
                     'randomize'            => false,
                     'use_upload_name'      => true,
                     'use_upload_extension' => true,
-                )
+                ]
             );
         }
     }

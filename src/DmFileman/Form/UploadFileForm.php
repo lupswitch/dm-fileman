@@ -23,33 +23,33 @@ class UploadFileForm extends BaseForm
         $this->setAttribute('role', 'form');
 
         $this->add(
-            array(
-                'name' => 'file',
-                'type' => 'file',
-                'options' => array(
+            [
+                'name'      => 'file',
+                'type'      => 'file',
+                'options'   => [
                     'label' => 'Upload File',
-                ),
-                'attribute' => array(
+                ],
+                'attribute' => [
                     'multiple' => true,
-                ),
-            )
+                ],
+            ]
         );
 
         $this->add(
-            array(
+            [
                 'name' => 'security',
                 'type' => 'csrf',
-            )
+            ]
         );
 
         $this->add(
-            array(
-                'name' => 'submit',
-                'type' => 'submit',
-                'attributes' => array(
+            [
+                'name'       => 'submit',
+                'type'       => 'submit',
+                'attributes' => [
                     'value' => 'Upload File(s)',
-                ),
-            )
+                ],
+            ]
         );
     }
 }
