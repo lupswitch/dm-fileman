@@ -10,8 +10,9 @@ use DmCommon\View\Helper\UserText;
 
 use DmFileman\Controller\DeleteFileController;
 use DmFileman\Form\DeleteFileForm;
-use DmFileman\Service\FileManager as FileManagerService;
-use DmFileman\Service\Thumbnailer as ThumbnailerService;
+use DmFileman\InputFilter\DeleteFile as DeleteFileInputFilter;
+use DmFileman\Service\FileManager\FileManager as FileManagerService;
+use DmFileman\Service\Thumbnailer\Thumbnailer as ThumbnailerService;
 
 class DeleteFile implements FactoryInterface
 {
@@ -37,7 +38,7 @@ class DeleteFile implements FactoryInterface
         /** @var UserText $userText */
         $userText = $serviceLocator->get('DmFileman\View\Helper\UserText');
 
-        $deleteFileForm->setInputFilter(new DeleteFile());
+        $deleteFileForm->setInputFilter(new DeleteFileInputFilter());
 
         $controller = new DeleteFileController(
             $fileManager,

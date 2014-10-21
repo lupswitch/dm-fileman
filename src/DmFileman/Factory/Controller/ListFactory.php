@@ -14,7 +14,7 @@ use DmFileman\Form\UploadFileForm;
 use DmFileman\InputFilter\CreateDirectory as CreateDirectoryInputFilter;
 use DmFileman\InputFilter\DeleteFile as DeleteFileInputFilter;
 use DmFileman\InputFilter\UploadFile as UploadFileInputFilter;
-use DmFileman\Service\FileManager as FileManagerService;
+use DmFileman\Service\FileManager\FileManager as FileManagerService;
 
 class ListFactory implements FactoryInterface
 {

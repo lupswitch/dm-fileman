@@ -1,6 +1,6 @@
 <?php
 
-namespace DmFileman\Factory\InputFilter;
+namespace DmFileman\Factory\Service;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;

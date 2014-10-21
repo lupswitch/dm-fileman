@@ -1,12 +1,12 @@
 <?php
 
-namespace DmFileman\Factory\InputFilter;
+namespace DmFileman\Factory\Service;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 use DmFileman\Helper\Options as OptionsHelper;
-use DmFileman\Service\FileManager as FileManagerService;
+use DmFileman\Service\FileManager\FileManager as FileManagerService;
 use DmFileman\Service\FileManager\Factory as FileManagerFactory;
 
 class FileManager implements FactoryInterface

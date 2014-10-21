@@ -1,6 +1,6 @@
 <?php
 
-namespace DmFileman\Factory\Helper;
+namespace DmFileman\Factory\View\Helper;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
