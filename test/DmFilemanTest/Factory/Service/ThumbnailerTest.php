@@ -18,7 +18,7 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $serviceLocator = new ServiceLocatorDummy();
+        $serviceLocator = new ServiceLocatorDummy($this);
 
         $optionsStub = $this->getMockBuilder('DmFileman\Helper\Options')
             ->setMethods(['getThumbsOptions'])

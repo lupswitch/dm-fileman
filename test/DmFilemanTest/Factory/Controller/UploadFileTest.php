@@ -18,7 +18,7 @@ class UploadFileTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $serviceLocator = new ServiceLocatorDummy();
+        $serviceLocator = new ServiceLocatorDummy($this);
 
         $fileManager = $serviceLocator->get('DmFileman\Service\FileManager\FileManager');
         $serviceLocator->set('DmFileman\Service\FileManager', $fileManager);

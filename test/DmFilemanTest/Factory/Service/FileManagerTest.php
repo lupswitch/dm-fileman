@@ -18,7 +18,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $serviceLocator = new ServiceLocatorDummy();
+        $serviceLocator = new ServiceLocatorDummy($this);
 
         $result = $this->sut->createService($serviceLocator);
 

@@ -18,7 +18,10 @@ class UploadFileTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $serviceLocator = new ServiceLocatorDummy();
+        $serviceLocator = new ServiceLocatorDummy($this);
+
+        $optionsHelper = $this->getMock('DmFileman\Helper\Options', ['getExtensions', 'getMaxSize'], [], '', false);
+        $serviceLocator->set('DmFileman\Helper\Options', $optionsHelper);
 
         $result = $this->sut->createService($serviceLocator);
 

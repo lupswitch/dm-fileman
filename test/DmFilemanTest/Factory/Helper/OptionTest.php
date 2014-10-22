@@ -18,7 +18,7 @@ class OptionTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $serviceLocator = new ServiceLocatorDummy();
+        $serviceLocator = new ServiceLocatorDummy($this);
 
         $serviceLocator->set('config', []);
 
