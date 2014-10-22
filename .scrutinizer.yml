@@ -81,6 +81,12 @@ tools:
     php_analyzer:
         filter:
             paths: ["test/*"]
+    php_sim: true
     sensiolabs_security_checker: true
     external_code_coverage:
         timeout: 1800
+
+checks:
+    php:
+        code_rating: true
+        duplication: true
