@@ -1,6 +1,6 @@
 <?php
 
-chdir(dirname(__DIR__));
+chdir(dirname(dirname(__DIR__)));
 
 $loader = null;
 
