@@ -3,7 +3,7 @@
 <phpunit
         cacheTokens="false"
         verbose="true"
-        bootstrap="./test/init.php">
+        bootstrap="./test/unit/init.php">
     <testsuites>
         <testsuite name="DmFilemanTest">
             <directory>./test/unit/DmFilemanTest</directory>
