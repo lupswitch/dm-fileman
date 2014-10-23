@@ -6,7 +6,7 @@
         bootstrap="./test/init.php">
     <testsuites>
         <testsuite name="DmFilemanTest">
-            <directory>./test/DmFilemanTest</directory>
+            <directory>./test/unit/DmFilemanTest</directory>
         </testsuite>
     </testsuites>
     <filter>
