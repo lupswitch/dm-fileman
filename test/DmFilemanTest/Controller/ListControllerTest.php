@@ -3,12 +3,10 @@
 namespace DmFilemanTest\Controller;
 
 use DmFileman\Controller\ListController;
-use DmTest\Controller\TestCaseTrait;
+use DmTest\Controller\PluginMockFactory;
 
 class ListControllerTest extends \PHPUnit_Framework_TestCase
 {
-    use TestCaseTrait;
-
     /** @var ListController */
     protected $sut;
 
@@ -23,6 +21,9 @@ class ListControllerTest extends \PHPUnit_Framework_TestCase
 
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     protected $deleteFileFormMock;
+
+    /** @var PluginMockFactory */
+    protected $mockFactory;
 
     public function setUp()
     {
@@ -49,6 +50,8 @@ class ListControllerTest extends \PHPUnit_Framework_TestCase
             $this->uploadFileFormMock,
             $this->deleteFileFormMock
         );
+
+        $this->mockFactory = new PluginMockFactory($this);
     }
 
     /**
@@ -56,10 +59,10 @@ class ListControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testIndexActionRedirectsToListPage()
     {
-        $responseMock = $this->getResponseMock();
+        $responseMock = $this->mockFactory->getResponseMock();
 
-        $redirectMock = $this->getRedirectPluginMock($responseMock);
-        $pluginMock   = $this->getPluginMock($redirectMock);
+        $redirectMock = $this->mockFactory->getRedirectPluginMock($responseMock);
+        $pluginMock   = $this->mockFactory->getPluginMock($redirectMock);
 
         $this->sut->setPluginManager($pluginMock);
 
@@ -87,10 +90,10 @@ class ListControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testRefreshActionRedirectsToListPage()
     {
-        $responseMock = $this->getResponseMock();
+        $responseMock = $this->mockFactory->getResponseMock();
 
-        $redirectMock = $this->getRedirectPluginMock($responseMock);
-        $pluginMock   = $this->getPluginMock($redirectMock);
+        $redirectMock = $this->mockFactory->getRedirectPluginMock($responseMock);
+        $pluginMock   = $this->mockFactory->getPluginMock($redirectMock);
 
         $this->sut->setPluginManager($pluginMock);
 

@@ -3,12 +3,10 @@
 namespace DmFilemanTest\Controller;
 
 use DmFileman\Controller\CreateDirectoryController;
-use DmTest\Controller\TestCaseTrait;
+use DmTest\Controller\PluginMockFactory;
 
 class CreateDirectoryControllerTest extends \PHPUnit_Framework_TestCase
 {
-    use TestCaseTrait;
-
     /** @var CreateDirectoryController */
     protected $sut;
 
@@ -29,6 +27,9 @@ class CreateDirectoryControllerTest extends \PHPUnit_Framework_TestCase
 
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     protected $userTextMock;
+
+    /** @var PluginMockFactory */
+    protected $mockFactory;
 
     public function setUp()
     {
@@ -56,6 +57,8 @@ class CreateDirectoryControllerTest extends \PHPUnit_Framework_TestCase
             $this->thumbnailerMock,
             $this->userTextMock
         );
+
+        $this->mockFactory = new PluginMockFactory($this);
     }
 
     /**
@@ -63,11 +66,11 @@ class CreateDirectoryControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateActionAddsErrorMessageToFlashMessengerByDefault()
     {
-        $responseMock = $this->getResponseMock();
+        $responseMock = $this->mockFactory->getResponseMock();
 
-        $flashMessengerMock = $this->getFlashMessengerPluginMock(0, 1);
-        $redirectMock       = $this->getRedirectPluginMock($responseMock);
-        $pluginMock         = $this->getPluginMock($flashMessengerMock, $redirectMock);
+        $flashMessengerMock = $this->mockFactory->getFlashMessengerPluginMock(0, 1);
+        $redirectMock       = $this->mockFactory->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->mockFactory->getPluginMock($flashMessengerMock, $redirectMock);
 
         $this->sut->setPluginManager($pluginMock);
 
@@ -81,15 +84,15 @@ class CreateDirectoryControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateActionAddsErrorMessageToFlashMessengerWhenFormIsNotValid()
     {
-        $responseMock = $this->getResponseMock();
+        $responseMock = $this->mockFactory->getResponseMock();
 
-        $flashMessengerMock = $this->getFlashMessengerPluginMock(0, 1);
-        $redirectMock       = $this->getRedirectPluginMock($responseMock);
-        $pluginMock         = $this->getPluginMock($flashMessengerMock, $redirectMock);
+        $flashMessengerMock = $this->mockFactory->getFlashMessengerPluginMock(0, 1);
+        $redirectMock       = $this->mockFactory->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->mockFactory->getPluginMock($flashMessengerMock, $redirectMock);
 
         $this->sut->setPluginManager($pluginMock);
 
-        $requestMock = $this->getRequestMock([]);
+        $requestMock = $this->mockFactory->getRequestMock([]);
         $this->sut->setRequest($requestMock);
 
         $inputFilterMock = $this->getMock('Zend\InputFilter\InputFilter', ['init']);
@@ -112,15 +115,15 @@ class CreateDirectoryControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateActionAddsSuccessMessageToFlashMessengerWhenFormIsValid()
     {
-        $responseMock = $this->getResponseMock();
+        $responseMock = $this->mockFactory->getResponseMock();
 
-        $flashMessengerMock = $this->getFlashMessengerPluginMock(1, 0);
-        $redirectMock       = $this->getRedirectPluginMock($responseMock);
-        $pluginMock         = $this->getPluginMock($flashMessengerMock, $redirectMock);
+        $flashMessengerMock = $this->mockFactory->getFlashMessengerPluginMock(1, 0);
+        $redirectMock       = $this->mockFactory->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->mockFactory->getPluginMock($flashMessengerMock, $redirectMock);
 
         $this->sut->setPluginManager($pluginMock);
 
-        $requestMock = $this->getRequestMock([]);
+        $requestMock = $this->mockFactory->getRequestMock([]);
         $this->sut->setRequest($requestMock);
 
         $inputFilterMock = $this->getMock('Zend\InputFilter\InputFilter', ['init']);

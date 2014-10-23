@@ -3,12 +3,10 @@
 namespace DmFilemanTest\Controller;
 
 use DmFileman\Controller\UploadFileController;
-use DmTest\Controller\TestCaseTrait;
+use DmTest\Controller\PluginMockFactory;
 
 class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
 {
-    use TestCaseTrait;
-
     /** @var UploadFileController */
     protected $sut;
 
@@ -23,6 +21,9 @@ class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
 
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     protected $userTextMock;
+
+    /** @var PluginMockFactory */
+    protected $mockFactory;
 
     public function setUp()
     {
@@ -50,6 +51,8 @@ class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
             $this->thumbnailerMock,
             $this->userTextMock
         );
+
+        $this->mockFactory = new PluginMockFactory($this);
     }
 
     /**
@@ -57,11 +60,11 @@ class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testUploadActionAddsErrorMessageToFlashMessengerByDefault()
     {
-        $responseMock = $this->getResponseMock();
+        $responseMock = $this->mockFactory->getResponseMock();
 
-        $flashMessengerMock = $this->getFlashMessengerPluginMock(0, 1);
-        $redirectMock       = $this->getRedirectPluginMock($responseMock);
-        $pluginMock         = $this->getPluginMock($flashMessengerMock, $redirectMock);
+        $flashMessengerMock = $this->mockFactory->getFlashMessengerPluginMock(0, 1);
+        $redirectMock       = $this->mockFactory->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->mockFactory->getPluginMock($flashMessengerMock, $redirectMock);
 
         $this->sut->setPluginManager($pluginMock);
 
@@ -82,15 +85,15 @@ class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testUploadActionAddsErrorMessageToFlashMessengerWhenFormIsNotValid()
     {
-        $responseMock = $this->getResponseMock();
+        $responseMock = $this->mockFactory->getResponseMock();
 
-        $flashMessengerMock = $this->getFlashMessengerPluginMock(0, 1);
-        $redirectMock       = $this->getRedirectPluginMock($responseMock);
-        $pluginMock         = $this->getPluginMock($flashMessengerMock, $redirectMock);
+        $flashMessengerMock = $this->mockFactory->getFlashMessengerPluginMock(0, 1);
+        $redirectMock       = $this->mockFactory->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->mockFactory->getPluginMock($flashMessengerMock, $redirectMock);
 
         $this->sut->setPluginManager($pluginMock);
 
-        $requestMock = $this->getRequestMock(new \SplFixedArray(0), new \SplFixedArray(0));
+        $requestMock = $this->mockFactory->getRequestMock(new \SplFixedArray(0), new \SplFixedArray(0));
         $this->sut->setRequest($requestMock);
 
         $inputFilterMock = $this->getMock('Zend\InputFilter\InputFilter', ['init', 'setCurrentDir']);
@@ -121,11 +124,11 @@ class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testUploadActionAddsUploadErrorsToFlashMessenger()
     {
-        $responseMock = $this->getResponseMock();
+        $responseMock = $this->mockFactory->getResponseMock();
 
-        $flashMessengerMock = $this->getFlashMessengerPluginMock(0, 3);
-        $redirectMock       = $this->getRedirectPluginMock($responseMock);
-        $pluginMock         = $this->getPluginMock(
+        $flashMessengerMock = $this->mockFactory->getFlashMessengerPluginMock(0, 3);
+        $redirectMock       = $this->mockFactory->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->mockFactory->getPluginMock(
             $flashMessengerMock,
             $flashMessengerMock,
             $flashMessengerMock,
@@ -134,7 +137,7 @@ class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
 
         $this->sut->setPluginManager($pluginMock);
 
-        $requestMock = $this->getRequestMock(new \SplFixedArray(0), new \SplFixedArray(0));
+        $requestMock = $this->mockFactory->getRequestMock(new \SplFixedArray(0), new \SplFixedArray(0));
         $this->sut->setRequest($requestMock);
 
         $inputFilterMock = $this->getMock('Zend\InputFilter\InputFilter', ['init', 'setCurrentDir']);
@@ -165,15 +168,15 @@ class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testUploadActionAddsSuccessMessageToFlashMessengerWhenFormIsValid()
     {
-        $responseMock = $this->getResponseMock();
+        $responseMock = $this->mockFactory->getResponseMock();
 
-        $flashMessengerMock = $this->getFlashMessengerPluginMock(1, 0);
-        $redirectMock       = $this->getRedirectPluginMock($responseMock);
-        $pluginMock         = $this->getPluginMock($flashMessengerMock, $redirectMock);
+        $flashMessengerMock = $this->mockFactory->getFlashMessengerPluginMock(1, 0);
+        $redirectMock       = $this->mockFactory->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->mockFactory->getPluginMock($flashMessengerMock, $redirectMock);
 
         $this->sut->setPluginManager($pluginMock);
 
-        $requestMock = $this->getRequestMock(new \SplFixedArray(0), new \SplFixedArray(0));
+        $requestMock = $this->mockFactory->getRequestMock(new \SplFixedArray(0), new \SplFixedArray(0));
         $this->sut->setRequest($requestMock);
 
         $inputFilterMock = $this->getMock('Zend\InputFilter\InputFilter', ['init', 'setCurrentDir']);
@@ -204,15 +207,15 @@ class UploadFileControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testUploadActionCreatesThumbnail()
     {
-        $responseMock = $this->getResponseMock();
+        $responseMock = $this->mockFactory->getResponseMock();
 
-        $flashMessengerMock = $this->getFlashMessengerPluginMock(1, 0);
-        $redirectMock       = $this->getRedirectPluginMock($responseMock);
-        $pluginMock         = $this->getPluginMock($flashMessengerMock, $redirectMock);
+        $flashMessengerMock = $this->mockFactory->getFlashMessengerPluginMock(1, 0);
+        $redirectMock       = $this->mockFactory->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->mockFactory->getPluginMock($flashMessengerMock, $redirectMock);
 
         $this->sut->setPluginManager($pluginMock);
 
-        $requestMock = $this->getRequestMock(new \SplFixedArray(0), new \SplFixedArray(0));
+        $requestMock = $this->mockFactory->getRequestMock(new \SplFixedArray(0), new \SplFixedArray(0));
         $this->sut->setRequest($requestMock);
 
         $inputFilterMock = $this->getMock('Zend\InputFilter\InputFilter', ['init', 'setCurrentDir']);

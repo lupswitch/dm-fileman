@@ -78,11 +78,11 @@ class CreateDirectoryController extends AbstractActionController
     public function createAction()
     {
         if ($this->handleCreatePost($this->createDirForm)) {
-            $this->flashMessenger()
-                ->addSuccessMessage($this->userText->getMessage(EntityName::DIRECTORY, Message::CREATE_SUCCESS));
+            $msg = $this->userText->getMessage(EntityName::DIRECTORY, Message::CREATE_SUCCESS);
+            $this->flashMessenger()->addSuccessMessage($msg);
         } else {
-            $this->flashMessenger()
-                ->addErrorMessage($this->userText->getMessage(EntityName::DIRECTORY, Message::CREATE_FAILURE));
+            $msg = $this->userText->getMessage(EntityName::DIRECTORY, Message::CREATE_FAILURE);
+            $this->flashMessenger()->addErrorMessage($msg);
         }
 
         return $this->redirect()->toRoute('filemanager/list', array('dir' => $this->getCurrentPath()));

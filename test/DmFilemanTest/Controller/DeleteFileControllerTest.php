@@ -3,12 +3,10 @@
 namespace DmFilemanTest\Controller;
 
 use DmFileman\Controller\DeleteFileController;
-use DmTest\Controller\TestCaseTrait;
+use DmTest\Controller\PluginMockFactory;
 
 class DeleteFileControllerTest extends \PHPUnit_Framework_TestCase
 {
-    use TestCaseTrait;
-
     /** @var DeleteFileController */
     protected $sut;
 
@@ -23,6 +21,9 @@ class DeleteFileControllerTest extends \PHPUnit_Framework_TestCase
 
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     protected $userTextMock;
+
+    /** @var PluginMockFactory */
+    protected $mockFactory;
 
     /**
      * @covers DmFileman\Controller\DeleteFileController
@@ -53,6 +54,8 @@ class DeleteFileControllerTest extends \PHPUnit_Framework_TestCase
             $this->thumbnailerMock,
             $this->userTextMock
         );
+
+        $this->mockFactory = new PluginMockFactory($this);
     }
 
     /**
@@ -60,11 +63,11 @@ class DeleteFileControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteActionAddsErrorMessageToFlashMessengerByDefault()
     {
-        $responseMock = $this->getResponseMock();
+        $responseMock = $this->mockFactory->getResponseMock();
 
-        $flashMessengerMock = $this->getFlashMessengerPluginMock(0, 1);
-        $redirectMock       = $this->getRedirectPluginMock($responseMock);
-        $pluginMock         = $this->getPluginMock($flashMessengerMock, $redirectMock);
+        $flashMessengerMock = $this->mockFactory->getFlashMessengerPluginMock(0, 1);
+        $redirectMock       = $this->mockFactory->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->mockFactory->getPluginMock($flashMessengerMock, $redirectMock);
 
         $this->sut->setPluginManager($pluginMock);
 
@@ -78,15 +81,15 @@ class DeleteFileControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteActionAddsErrorMessageToFlashMessengerWhenFormIsNotValid()
     {
-        $responseMock = $this->getResponseMock();
+        $responseMock = $this->mockFactory->getResponseMock();
 
-        $flashMessengerMock = $this->getFlashMessengerPluginMock(0, 1);
-        $redirectMock       = $this->getRedirectPluginMock($responseMock);
-        $pluginMock         = $this->getPluginMock($flashMessengerMock, $redirectMock);
+        $flashMessengerMock = $this->mockFactory->getFlashMessengerPluginMock(0, 1);
+        $redirectMock       = $this->mockFactory->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->mockFactory->getPluginMock($flashMessengerMock, $redirectMock);
 
         $this->sut->setPluginManager($pluginMock);
 
-        $requestMock = $this->getRequestMock([]);
+        $requestMock = $this->mockFactory->getRequestMock([]);
         $this->sut->setRequest($requestMock);
 
         $inputFilterMock = $this->getMock('Zend\InputFilter\InputFilter', ['init']);
@@ -109,15 +112,15 @@ class DeleteFileControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteActionAddsSuccessMessageToFlashMessengerWhenFormIsValid()
     {
-        $responseMock = $this->getResponseMock();
+        $responseMock = $this->mockFactory->getResponseMock();
 
-        $flashMessengerMock = $this->getFlashMessengerPluginMock(1, 0);
-        $redirectMock       = $this->getRedirectPluginMock($responseMock);
-        $pluginMock         = $this->getPluginMock($flashMessengerMock, $redirectMock);
+        $flashMessengerMock = $this->mockFactory->getFlashMessengerPluginMock(1, 0);
+        $redirectMock       = $this->mockFactory->getRedirectPluginMock($responseMock);
+        $pluginMock         = $this->mockFactory->getPluginMock($flashMessengerMock, $redirectMock);
 
         $this->sut->setPluginManager($pluginMock);
 
-        $requestMock = $this->getRequestMock([]);
+        $requestMock = $this->mockFactory->getRequestMock([]);
         $this->sut->setRequest($requestMock);
 
         $inputFilterMock = $this->getMock('Zend\InputFilter\InputFilter', ['init']);
