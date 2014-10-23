@@ -16,6 +16,9 @@ class ListFactoryTest extends \PHPUnit_Framework_TestCase
         $this->sut = new ListFactory;
     }
 
+    /**
+     * @covers DmFileman\Factory\Controller\ListFactory
+     */
     public function testCreateService()
     {
         $serviceLocator = new ServiceLocatorDummy($this);

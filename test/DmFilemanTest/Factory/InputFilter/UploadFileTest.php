@@ -16,6 +16,9 @@ class UploadFileTest extends \PHPUnit_Framework_TestCase
         $this->sut = new UploadFile;
     }
 
+    /**
+     * @covers DmFileman\Factory\InputFilter\UploadFile
+     */
     public function testCreateService()
     {
         $serviceLocator = new ServiceLocatorDummy($this);

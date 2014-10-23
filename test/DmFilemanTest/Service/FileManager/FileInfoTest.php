@@ -67,6 +67,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         return new \SplFileInfo($this->baseDir);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetSizeCallsFormatterHelper()
     {
         $expectedResult = 654;
@@ -81,6 +84,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetPermissionCallsFormatterHelper()
     {
         $expectedResult = 654;
@@ -95,6 +101,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetOwnerCallsFormatterHelper()
     {
         $expectedResult = 654;
@@ -109,6 +118,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetGroupCallsFormatterHelper()
     {
         $expectedResult = 654;
@@ -123,6 +135,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetAccessedAtReturnsEmptyStringWhenSplFileInfoIsNotSet()
     {
         $expectedResult = '';
@@ -132,6 +147,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetAccessedAtCallsSplFileInfo()
     {
         $splFileInfo = $this->getSplFileInfoMock();
@@ -144,6 +162,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThanOrEqual(time() - 10, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetCreatedAtReturnsEmptyStringWhenSplFileInfoIsNotSet()
     {
         $expectedResult = '';
@@ -153,6 +174,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetCreatedAtCallsSplFileInfo()
     {
         $splFileInfo = $this->getSplFileInfoMock();
@@ -165,6 +189,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThanOrEqual(time() - 10, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetModifiedAtReturnsEmptyStringWhenSplFileInfoIsNotSet()
     {
         $actualResult = $this->sut->getModifiedAt();
@@ -172,6 +199,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('', $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetModifiedAtCallsSplFileInfo()
     {
         $splFileInfo = $this->getSplFileInfoMock();
@@ -184,6 +214,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThanOrEqual(time() - 10, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetExtensionCallsPathHelper()
     {
         $expectedResult = '';
@@ -195,6 +228,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetDisplayNameReturnsEmptyStringByDefault()
     {
         $expectedResult = '';
@@ -204,6 +240,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetDisplayNameReturnsDisplayNameIfSet()
     {
         $expectedResult = 'foo';
@@ -215,6 +254,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetDisplayNameCallsSplFileInfoIfDisplayNameIsNotSet()
     {
         $expectedResult = 'upload';
@@ -228,6 +270,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetRelativePathCallsPathHelper()
     {
         $expectedResult = 'foo';
@@ -239,6 +284,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetOrigPathReturnsEmptyStringByDefault()
     {
         $expectedResult = '';
@@ -248,6 +296,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetOrigPathCallsPathHelperIfSplFileInfoIsSet()
     {
         $expectedResult = 'foo';
@@ -262,6 +313,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetThumbnailPathCallsPathHelper()
     {
         $expectedResult = 'foo';
@@ -279,6 +333,9 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetImageThumbnailPathCallsPathHelper()
     {
         $expectedResult = 'foo';
@@ -298,6 +355,7 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \BadMethodCallException
+     * @covers DmFileman\Service\FileManager\FileInfo
      */
     public function testGetThumbnailPathThrowsExceptionIfSplFileInfoIsNotSet()
     {
@@ -306,12 +364,16 @@ class FileInfoTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \BadMethodCallException
+     * @covers DmFileman\Service\FileManager\FileInfo
      */
     public function testGetImageThumbnailPathThrowsExceptionIfSplFileInfoIsNotSet()
     {
         $this->sut->getImageThumbnailPath();
     }
 
+    /**
+     * @covers DmFileman\Service\FileManager\FileInfo
+     */
     public function testGetTypeThumbnailPathCallsPathHelper()
     {
         $expectedResult = 'foo';

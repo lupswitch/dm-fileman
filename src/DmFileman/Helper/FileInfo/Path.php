@@ -150,7 +150,7 @@ class Path
         if (!empty($splFileInfo)) {
             $thumbPathname = str_replace('orig', 'thumb', $pathname);
 
-            if (file_exists($thumbPathname)) {
+            if ($thumbPathname && file_exists($thumbPathname)) {
                 return $thumbBasePath . $relativePath . $displayName;
             }
         }

@@ -16,6 +16,9 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
         $this->sut = new Thumbnailer;
     }
 
+    /**
+     * @covers DmFileman\Factory\Service\Thumbnailer
+     */
     public function testCreateService()
     {
         $serviceLocator = new ServiceLocatorDummy($this);

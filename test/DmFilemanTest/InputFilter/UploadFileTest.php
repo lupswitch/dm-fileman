@@ -56,7 +56,7 @@ class UploadFileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers       \DmFileman\InputFilter\UploadFile
+     * @covers       DmFileman\InputFilter\UploadFile
      * @dataProvider inputDataProvider
      *
      * @param mixed  $nameData
@@ -93,6 +93,9 @@ class UploadFileTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @covers DmFileman\InputFilter\UploadFile
+     */
     public function testFileValidatorSAreSet()
     {
         $validatorChainMock = $this->getMockBuilder('Zend\Validator\ValidatorChain')
@@ -134,6 +137,9 @@ class UploadFileTest extends \PHPUnit_Framework_TestCase
         $this->sut->init();
     }
 
+    /**
+     * @covers DmFileman\InputFilter\UploadFile
+     */
     public function testRenameFilterIsSet()
     {
         $validatorChainMock = $this->getMockBuilder('Zend\Validator\ValidatorChain')

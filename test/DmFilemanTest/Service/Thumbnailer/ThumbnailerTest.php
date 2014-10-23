@@ -43,7 +43,7 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \DmFileman\Service\Thumbnailer\Thumbnailer
+     * @covers DmFileman\Service\Thumbnailer\Thumbnailer
      */
     public function testResizeGetsOnlyCopiesWhenImageIsSmallerThanAllowedThumbnailSize()
     {
@@ -162,7 +162,7 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers       \DmFileman\Service\Thumbnailer\Thumbnailer
+     * @covers       DmFileman\Service\Thumbnailer\Thumbnailer
      * @dataProvider getResizeProvider
      *
      * @param string $origName
@@ -231,7 +231,7 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \DmFileman\Service\Thumbnailer\Thumbnailer
+     * @covers            DmFileman\Service\Thumbnailer\Thumbnailer
      * @expectedException \InvalidArgumentException
      */
     public function testConstructorThrowsExceptionOnUnknownImagineImplementation()
@@ -248,6 +248,9 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
         $this->sut = new Thumbnailer($this->imagineMock, $this->factoryMock);
     }
 
+    /**
+     * @covers DmFileman\Service\Thumbnailer\Thumbnailer
+     */
     public function testResizeOrigImageReturnsFalseIfFileDoesNotExist()
     {
         $origName = 'asd';
@@ -259,6 +262,9 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\Thumbnailer\Thumbnailer
+     */
     public function testResizeOrigImageReturnsFalseIfGetimagesizeFails()
     {
         $origName = vfs\vfsStream::url('root/thumb/white.gif');
@@ -270,6 +276,9 @@ class ThumbnailerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($actualResult);
     }
 
+    /**
+     * @covers DmFileman\Service\Thumbnailer\Thumbnailer
+     */
     public function testResizeOrigImageReturnsTrueIfGetimagesizeIsSuccessful()
     {
         $origName = vfs\vfsStream::url('root/orig/white.gif');

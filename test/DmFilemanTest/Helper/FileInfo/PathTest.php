@@ -166,6 +166,29 @@ class PathTest extends \PHPUnit_Framework_TestCase
      * @covers   DmFileman\Helper\FileInfo\Path
      * @requires PHP 5.6
      */
+    public function testGetThumbnailPathReturnsDirectoryThumbnailForDirectoriesWhenThumbnailCreationFails()
+    {
+        $splFileInfoMock = $this->getMock('\SplFileInfo', ['isFile', 'isDir', 'getExtension'], [], '', false);
+
+        $splFileInfoMock->expects($this->any())->method('isFile')->will($this->returnValue(true));
+        $splFileInfoMock->expects($this->any())->method('isDir')->will($this->returnValue(false));
+        $splFileInfoMock->expects($this->any())->method('getExtension')->will($this->returnValue('jpg'));
+
+        $pathname      = '';
+        $displayName   = '';
+        $thumbBasePath = '/upload/thumb';
+        $relativePath  = '/';
+
+        $actualResult = $this->sut
+            ->getThumbnailPath($splFileInfoMock, $pathname, $displayName, $thumbBasePath, $relativePath);
+
+        $this->assertEquals('/img/filemanager/image.png', $actualResult);
+    }
+
+    /**
+     * @covers   DmFileman\Helper\FileInfo\Path
+     * @requires PHP 5.6
+     */
     public function testGetThumbnailPathGetsTypeThumbnailPathIfNoSpecialImagePathWasFound()
     {
         $image = vfs\vfsStream::url('upload/orig/img.jpg');

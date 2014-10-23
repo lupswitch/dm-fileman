@@ -100,7 +100,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \DmFileman\Service\FileManager\FileManager
+     * @covers DmFileman\Service\FileManager\FileManager
      */
     public function testGetListReturnsEmptyByDefault()
     {
@@ -125,7 +125,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \DmFileman\Service\FileManager\FileManager
+     * @covers DmFileman\Service\FileManager\FileManager
      */
     public function testGetListReturnsList()
     {
@@ -152,7 +152,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \DmFileman\Service\FileManager\FileManager
+     * @covers DmFileman\Service\FileManager\FileManager
      */
     public function testGetListReturnsListWithRealFiles()
     {
@@ -180,7 +180,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \DmFileman\Service\FileManager\FileManager
+     * @covers DmFileman\Service\FileManager\FileManager
      */
     public function testCreateCreatesNewDirectories()
     {
@@ -193,7 +193,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \DmFileman\Service\FileManager\FileManager
+     * @covers DmFileman\Service\FileManager\FileManager
      */
     public function testCreateReturnsFalseIfDirectoryAlreadyExists()
     {
@@ -203,7 +203,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \DmFileman\Service\FileManager\FileManager
+     * @covers DmFileman\Service\FileManager\FileManager
      */
     public function testDeleteDeletesFiles()
     {
@@ -217,7 +217,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \DmFileman\Service\FileManager\FileManager
+     * @covers DmFileman\Service\FileManager\FileManager
      */
     public function testDeleteDeletesFolders()
     {
@@ -231,7 +231,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \DmFileman\Service\FileManager\FileManager
+     * @covers DmFileman\Service\FileManager\FileManager
      */
     public function testDeleteTree()
     {

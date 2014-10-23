@@ -16,6 +16,9 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
         $this->sut = new FileManager;
     }
 
+    /**
+     * @covers DmFileman\Factory\Service\FileManager
+     */
     public function testCreateService()
     {
         $serviceLocator = new ServiceLocatorDummy($this);

@@ -98,7 +98,7 @@ class DeleteFileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers       \DmFileman\InputFilter\DeleteFile
+     * @covers       DmFileman\InputFilter\DeleteFile
      * @dataProvider inputDataProvider
      *
      * @param mixed  $nameData

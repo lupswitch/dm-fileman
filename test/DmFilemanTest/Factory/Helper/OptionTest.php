@@ -16,6 +16,9 @@ class OptionTest extends \PHPUnit_Framework_TestCase
         $this->sut = new Option;
     }
 
+    /**
+     * @covers DmFileman\Factory\Helper\Option
+     */
     public function testCreateService()
     {
         $serviceLocator = new ServiceLocatorDummy($this);

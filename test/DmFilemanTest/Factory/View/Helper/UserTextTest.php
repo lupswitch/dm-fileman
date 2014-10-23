@@ -16,6 +16,9 @@ class UserTextTest extends \PHPUnit_Framework_TestCase
         $this->sut = new UserText;
     }
 
+    /**
+     * @covers DmFileman\Factory\View\Helper\UserText
+     */
     public function testCreateService()
     {
         $serviceLocator = new ServiceLocatorDummy($this);

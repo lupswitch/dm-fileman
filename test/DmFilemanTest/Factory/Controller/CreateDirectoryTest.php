@@ -16,6 +16,9 @@ class CreateDirectoryTest extends \PHPUnit_Framework_TestCase
         $this->sut = new CreateDirectory;
     }
 
+    /**
+     * @covers DmFileman\Factory\Controller\CreateDirectory
+     */
     public function testCreateService()
     {
         $serviceLocator = new ServiceLocatorDummy($this);

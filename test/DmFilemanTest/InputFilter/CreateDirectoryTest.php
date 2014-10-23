@@ -98,7 +98,7 @@ class CreateDirectoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers       \DmFileman\InputFilter\CreateDirectory
+     * @covers       DmFileman\InputFilter\CreateDirectory
      * @dataProvider inputDataProvider
      *
      * @param mixed  $nameData

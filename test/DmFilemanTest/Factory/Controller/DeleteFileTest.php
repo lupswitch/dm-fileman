@@ -16,6 +16,9 @@ class DeleteFileTest extends \PHPUnit_Framework_TestCase
         $this->sut = new DeleteFile;
     }
 
+    /**
+     * @covers DmFileman\Factory\Controller\DeleteFile
+     */
     public function testCreateService()
     {
         $serviceLocator = new ServiceLocatorDummy($this);
