@@ -5,16 +5,6 @@
     "keywords": [
         "zf2"
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/peteraba/dm-common"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/peteraba/dm-test"
-        }
-    ],
     "require": {
         "php": ">=5.4",
         "ext-mbstring": "*",
